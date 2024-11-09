@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ReactSVG } from "react-svg";
 import { useUser } from "./hooks/UserContext";
-import { Clock } from "./activity/clock";
+import { Clock } from "./activity/Reloj.jsx";
 import { HashLink, NavHashLink } from 'react-router-hash-link';
 import  menuIcon from '../assets/menu.svg';
 
