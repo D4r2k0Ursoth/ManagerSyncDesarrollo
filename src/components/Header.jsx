@@ -4,7 +4,7 @@ import { ReactSVG } from "react-svg";
 import { useUser } from "./hooks/UserContext";
 import { Clock } from "./activity/Reloj.jsx";
 import { HashLink, NavHashLink } from 'react-router-hash-link';
-import  menuIcon from '../assets/menu.svg';
+import  menuIcon from '/menu.svg';
 
 export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);

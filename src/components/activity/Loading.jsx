@@ -1,5 +1,5 @@
 import React from 'react'
-import logoImage from '../../assets/logo-reducido.svg';
+import logoImage from '/logo-reducido.svg';
 export const Loading = () => { 
 return (
     <div class="flex items-center justify-center w-full h-full mt-48 flex-col">

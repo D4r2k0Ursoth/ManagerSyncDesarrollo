@@ -10,9 +10,9 @@ export function  LoadingPage() {
   return ( 
     <div>
       <Header/>
-      <ImgLoadingPage image=".\src\assets\image.svg"/>
-      <CardLoadingPage image00=".\src\assets\fast.svg" image01=".\src\assets\efficient.svg" image02=".\src\assets\calendar.svg" image03=".\src\assets\users.svg"/>
-      <EndSectionLoad image=".\src\assets\bg1.jpg"/>
+      <ImgLoadingPage image="\image.svg"/>
+      <CardLoadingPage image00="\fast.svg" image01="\efficient.svg" image02="\calendar.svg" image03="\users.svg"/>
+      <EndSectionLoad image="\bg1.jpg"/>
       <PriceCard></PriceCard>
       <Footer/>
     </div>

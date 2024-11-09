@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import logoImage from '../assets/logo-reducido.svg';
-import controlImage from '../assets/Dominio.svg';
+import logoImage from '/logo-reducido.svg';
+import controlImage from '/Dominio.svg';
 import { useNavigate } from "react-router-dom";
 import { useUser } from "./hooks/UserContext";
 
@@ -66,19 +66,19 @@ export function Sidebar({ logout }) {
                                 <div
                                 onClick={Menu.action} 
                                     className="flex items-center gap-x-4 cursor-pointer transition ease-in-out">
-                                    <img src={`./src/assets/${Menu.src}.svg`} alt={Menu.title} />
+                                    <img src={`/${Menu.src}.svg`} alt={Menu.title} />
                                     <span className={`${!open && "hidden"} origin-left lg:duration-500 duration-700 transition ease-in-out`}>{Menu.title}</span>
                                 </div>
 
                             ) : Menu.link ? (
                                     <Link to={Menu.link} className="flex items-center gap-x-4 transition ease-in-out">
-                                        <img src={`./src/assets/${Menu.src}.svg`} alt={Menu.title} />
+                                        <img src={`/${Menu.src}.svg`} alt={Menu.title} />
                                         <span className={`${!open && "hidden"} origin-left lg:duration-500 duration-700 transition ease-in-out`}>{Menu.title}</span>
                                     </Link>
 
                             ) : (
                                 <>
-                                    <img src={`./src/assets/${Menu.src}.svg`} alt={Menu.title} />
+                                    <img src={`/${Menu.src}.svg`} alt={Menu.title} />
                                     <span className={`${!open && "hidden"} origin-left lg:duration-500 duration-700 transition-all`}>{Menu.title}</span>
                                     
                                 </>
