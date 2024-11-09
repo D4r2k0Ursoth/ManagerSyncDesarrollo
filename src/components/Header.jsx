@@ -14,7 +14,7 @@ export const Header = () => {
     <nav className="flex flex-row justify-between h-20 bg-white relative pt-2 pb-2 ">
       {/* Condicional para redirigir según el estado de autenticación */}
       <Link to={user ? "/Settings" : "/"} className="h-30 w-30 lg:basis-1/5">
-        <ReactSVG src="src/assets/logo-completo.svg" className="h-30 w-30"/>
+        <ReactSVG src="/logo-completo.svg" className="h-30 w-30"/>
       </Link>
 
       <div className="lg:hidden cursor-pointer justify-between"
