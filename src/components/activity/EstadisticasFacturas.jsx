@@ -19,7 +19,7 @@ export function EstadisticasFacturas() {
   const { logout } = useAccountManagement();
 
   const fetchFacturas = () => {
-    fetch('http://localhost/managersyncbdf/public/api/facturas')
+    fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/facturas')
       .then(response => {
         if (!response.ok) {
           throw new Error('Error en la red');

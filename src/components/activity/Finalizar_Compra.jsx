@@ -81,7 +81,7 @@ export const Finalizar = ({
     };
   
     try {
-      const response = await fetch('http://localhost/managersyncbdf/public/api/compras', {
+      const response = await fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/compras', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

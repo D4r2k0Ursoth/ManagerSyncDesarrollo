@@ -19,7 +19,7 @@ export function HistorialInventario() {
   // Función para obtener los productos desde la API
   const fetchProductos = async () => {
     try {
-      const response = await fetch('http://localhost/managersyncbdf/public/api/productos/all');
+      const response = await fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/productos/all');
       if (!response.ok) {
         throw new Error('Error fetching data');
       }
@@ -56,7 +56,7 @@ export function HistorialInventario() {
   // Función para eliminar un producto
   const handleDelete = (id) => {
     if (window.confirm('¿Estás seguro de que deseas eliminar este producto?')) {
-      fetch(`http://localhost/managersyncbdf/public/api/productos/${id}`, {
+      fetch(`https://manaercynbdf-miccs.ondigitalocean.app/api/productos/${id}`, {
         method: 'DELETE',
       })
         .then(response => {
@@ -79,7 +79,7 @@ export function HistorialInventario() {
   // Función para manejar la actualización del producto
   const handleUpdate = (e) => {
     e.preventDefault();
-    fetch(`http://localhost/managersyncbdf/public/api/productos/${selectedProducto.id}`, {
+    fetch(`https://manaercynbdf-miccs.ondigitalocean.app/api/productos/${selectedProducto.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

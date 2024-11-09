@@ -26,7 +26,7 @@ export function Punto_venta() {
     // Función para obtener clientes filtrados por empresa_id
     const fetchClientes = async () => {
       try {
-        const response = await fetch("http://localhost/managersyncbdf/public/api/clientes/all");
+        const response = await fetch("https://manaercynbdf-miccs.ondigitalocean.app/api/clientes/all");
         const data = await response.json();
         const clientesFiltrados = data.filter(cliente => cliente.empresa_id === user.empresa_id);
         setClientes(clientesFiltrados);
@@ -38,7 +38,7 @@ export function Punto_venta() {
     // Función para obtener productos
     const fetchProductos = async () => {
       try {
-        const response = await fetch("http://localhost/managersyncbdf/public/api/productos/all");
+        const response = await fetch("https://manaercynbdf-miccs.ondigitalocean.app/api/productos/all");
         const data = await response.json();
         const productosFiltrados = data.filter(producto => producto.empresa_id === user.empresa_id);
         setProductos(productosFiltrados);

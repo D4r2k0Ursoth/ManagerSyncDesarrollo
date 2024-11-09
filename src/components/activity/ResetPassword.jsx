@@ -39,7 +39,7 @@ export function ResetPassword() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://managersyncbdf.test/api/password/reset', {
+      const response = await fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/password/reset', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

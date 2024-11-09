@@ -36,7 +36,7 @@ export function MantenimientoProductos() {
   const { logout } = useAccountManagement();
 
  const fetchProductos = () => {
-  fetch('http://localhost/managersyncbdf/public/api/productos/all')
+  fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/productos/all')
     .then(response => response.json())
     .then(data => {
       // Filtra los productos por empresa_id del usuario logueado
@@ -53,7 +53,7 @@ export function MantenimientoProductos() {
 
 
   const fetchCabysData = () => {
-    fetch('http://localhost/managersyncbdf/public/api/cabys-json')
+    fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/cabys-json')
       .then(response => response.json())
       .then(data => {
         if (Array.isArray(data.data)) {
@@ -117,7 +117,7 @@ export function MantenimientoProductos() {
   
     if (isEditing) {
       // Si se está editando, enviar una solicitud PUT con el ID correcto
-      fetch(`http://localhost/managersyncbdf/public/api/productos/${editingProduct}`, {
+      fetch(`https://manaercynbdf-miccs.ondigitalocean.app/api/productos/${editingProduct}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -137,7 +137,7 @@ export function MantenimientoProductos() {
       .catch(error => console.error('Error al actualizar producto:', error));
     } else {
       // Si no estamos editando, enviar una solicitud POST para crear uno nuevo
-      fetch('http://localhost/managersyncbdf/public/api/productos', {
+      fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/productos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -176,7 +176,7 @@ export function MantenimientoProductos() {
   
   const handleDelete = (id) => {
     if (window.confirm('¿Estás seguro de que deseas eliminar este producto?')) {
-      fetch(`http://localhost/managersyncbdf/public/api/productos/${id}`, {
+      fetch(`https://manaercynbdf-miccs.ondigitalocean.app/api/productos/${id}`, {
         method: 'DELETE',
       })
         .then(response => {

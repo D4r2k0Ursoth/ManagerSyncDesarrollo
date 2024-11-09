@@ -28,7 +28,7 @@ export function MantenimientoUsuarios() {
   // Función para obtener usuarios
 const fetchUsuarios = async () => {
   try {
-    const response = await fetch('http://managersyncbdf.test/api/usuarios/all', {
+    const response = await fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/usuarios/all', {
       headers: {
         'Authorization': `Bearer ${token}` // Usar el token del contexto
       }
@@ -69,7 +69,7 @@ const fetchUsuarios = async () => {
     }
 
     try {
-      const response = await fetch('http://managersyncbdf.test/api/register', {
+      const response = await fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -97,7 +97,7 @@ const fetchUsuarios = async () => {
     if (!confirmDelete) return; // Cancelar si el usuario no confirma
 
     try {
-      const response = await fetch(`http://managersyncbdf.test/api/usuarios/${id}`, {
+      const response = await fetch(`https://manaercynbdf-miccs.ondigitalocean.app/api/usuarios/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}` // Usar el token del contexto
@@ -136,7 +136,7 @@ const fetchUsuarios = async () => {
     const updatedUsuario = { ...formData };
 
     try {
-      const response = await fetch(`http://managersyncbdf.test/api/usuarios/${editingUsuario}`, {
+      const response = await fetch(`https://manaercynbdf-miccs.ondigitalocean.app/api/usuarios/${editingUsuario}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

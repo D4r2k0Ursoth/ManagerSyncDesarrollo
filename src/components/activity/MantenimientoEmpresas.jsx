@@ -22,7 +22,7 @@ export function MantenimientoEmpresas() {
   const [isValidatingCedula, setIsValidatingCedula] = useState(false);
 const [empresaData, setEmpresaData] = useState({});
   const fetchEmpresas = () => {
-    fetch('http://localhost/managersyncbdf/public/api/empresas')
+    fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/empresas')
       .then(response => response.json())
       .then(data => {
         setEmpresas(data);
@@ -116,7 +116,7 @@ const [empresaData, setEmpresaData] = useState({});
       empresa: tipoEmpresa // Esto se envía al controlador como 'empresa'
     };
 
-    fetch('http://localhost/managersyncbdf/public/api/empresas', {
+    fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/empresas', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -143,7 +143,7 @@ const [empresaData, setEmpresaData] = useState({});
   };
 
   const handleDelete = (id) => {
-    fetch(`http://localhost/managersyncbdf/public/api/empresas/${id}`, {
+    fetch(`https://manaercynbdf-miccs.ondigitalocean.app/api/empresas/${id}`, {
       method: 'DELETE',
     })
       .then(response => {
@@ -195,7 +195,7 @@ const [empresaData, setEmpresaData] = useState({});
         descripcion,
     };
 
-    fetch(`http://localhost/managersyncbdf/public/api/empresas/${editingEmpresa}`, {
+    fetch(`https://manaercynbdf-miccs.ondigitalocean.app/api/empresas/${editingEmpresa}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',

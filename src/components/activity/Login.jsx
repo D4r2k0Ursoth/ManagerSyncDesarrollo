@@ -22,7 +22,7 @@ export function Login() {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://managersyncbdf.test/api/login', {
+      const response = await fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

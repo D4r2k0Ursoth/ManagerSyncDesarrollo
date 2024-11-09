@@ -23,7 +23,7 @@ export function ConsultarCompras() {
   // Función para obtener las compras desde la API
   const fetchCompras = async () => {
     try {
-      const response = await fetch('http://localhost/managersyncbdf/public/api/compras/all');
+      const response = await fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/compras/all');
         if (!response.ok) {
           throw new Error('Error fetching data');
         }
@@ -204,7 +204,7 @@ export function ConsultarCompras() {
 
   const handleDelete = (id) => {
     if (window.confirm('¿Estás seguro de que deseas eliminar esta factura?')) {
-      fetch(`http://localhost/managersyncbdf/public/api/compras/${id}`, {
+      fetch(`https://manaercynbdf-miccs.ondigitalocean.app/api/compras/${id}`, {
         method: 'DELETE',
       })
         .then(response => {
@@ -227,7 +227,7 @@ export function ConsultarCompras() {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    fetch(`http://localhost/managersyncbdf/public/api/compras/${selectedCompra.id}`, {
+    fetch(`https://manaercynbdf-miccs.ondigitalocean.app/api/compras/${selectedCompra.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

@@ -38,7 +38,7 @@ const navigate = useNavigate();
     // Función para obtener las empresas
     const fetchEmpresas = async () => {
       try {
-        const response = await fetch('http://managersyncbdf.test/api/empresas'); // Asegúrate de que esta URL sea correcta
+        const response = await fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/empresas'); // Asegúrate de que esta URL sea correcta
         if (!response.ok) {
           throw new Error('Error al cargar las empresas');
         }
@@ -78,7 +78,7 @@ const navigate = useNavigate();
     }
 
     try {
-      const response = await fetch('http://managersyncbdf.test/api/register', {
+      const response = await fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/register', {
         method: 'POST',
         body: formDataToSend
       });

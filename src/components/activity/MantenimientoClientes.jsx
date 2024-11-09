@@ -19,7 +19,7 @@ export function MantenimientoClientes() {
   const { logout } = useAccountManagement();
 
   const fetchClientes = () => {
-    fetch('http://localhost/managersyncbdf/public/api/clientes/all')
+    fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/clientes/all')
       .then(response => response.json())
       .then(data => {
         // Filtra los clientes según el empresa_id del usuario logueado

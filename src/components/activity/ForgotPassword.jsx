@@ -23,7 +23,7 @@ export function ForgotPassword() {
       }
   
       try {
-        const response = await fetch('http://managersyncbdf.test/api/password/email', {
+        const response = await fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/password/email', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

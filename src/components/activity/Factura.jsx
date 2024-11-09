@@ -30,7 +30,7 @@ export function Factura({ subtotal, totalIVA, totalVenta, carrito, selectedClien
 
   useEffect(() => {
     if (user?.empresa_id) {
-      fetch(`http://localhost/managersyncbdf/public/api/empresas/${user.empresa_id}`)
+      fetch(`https://manaercynbdf-miccs.ondigitalocean.app/api/empresas/${user.empresa_id}`)
         .then(response => response.json())
         .then(data => {
           setEmpresa({
@@ -136,7 +136,7 @@ const detallesFactura = carrito.map((item) => ({
     };
 
     try {
-      const response = await fetch("http://localhost/managersyncbdf/public/api/facturas", {
+      const response = await fetch("https://manaercynbdf-miccs.ondigitalocean.app/api/facturas", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(facturaData),
@@ -192,7 +192,7 @@ const detallesFactura = carrito.map((item) => ({
 
     for (const detalle of detalles) {
       try {
-        const response = await fetch("http://localhost/managersyncbdf/public/api/detalles-factura", {
+        const response = await fetch("https://manaercynbdf-miccs.ondigitalocean.app/api/detalles-factura", {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(detalle),
@@ -215,7 +215,7 @@ const detallesFactura = carrito.map((item) => ({
 
   const actualizarStockProducto = async (productoId, cantidadVendida) => {
     try {
-      const response = await fetch(`http://localhost/managersyncbdf/public/api/productos/${productoId}/reducir-stock`, {
+      const response = await fetch(`https://manaercynbdf-miccs.ondigitalocean.app/api/productos/${productoId}/reducir-stock`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ cantidad: cantidadVendida }),
