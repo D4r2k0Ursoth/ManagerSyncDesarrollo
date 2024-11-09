@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import logoImage from '../assets/logo-reducido.svg';
-import controlImage from '../assets/control.svg';
+import controlImage from '../assets/Dominio.svg';
 import { useNavigate } from "react-router-dom";
 import { useUser } from "./hooks/UserContext";
 
