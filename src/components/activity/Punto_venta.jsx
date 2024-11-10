@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useUser } from "../hooks/UserContext";
 import { useAccountManagement } from '../hooks/useAccountManagement'; 
-
 import { Header } from "../Header.jsx";
 import { Detalle_facturas } from "./Detalle_facturas.jsx";
 import { Footer } from "../Footer.jsx";
@@ -133,14 +132,9 @@ export function Punto_venta() {
                 <div className="flex space-x-2">
                 <button
                   className="px-4 py-2 text-sm font-medium rounded-2xl bg-gray-100 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200"
-                  onClick={() => { window.location.href = '/MantenimientoClientes'; }}>
+                  onClick={() => { window.location.href = '/MantenimientoClientes.jsx'; }}>
                   Crear/Editar Cliente
                 </button>
-
-                
-                  <button className="px-4 py-2 text-sm font-medium rounded-2xl p-2 bg-gray-100 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200">
-                    Crear Exoneración
-                  </button>
                 </div>
               </div>
             </div>

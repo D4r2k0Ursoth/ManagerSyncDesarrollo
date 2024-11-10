@@ -6,7 +6,7 @@ export const useAccountManagement = (setUser, setToken) => {
 
   const deleteAccount = async (token) => {
     try {
-      const response = await fetch('http://managersyncbdf.test/api/delete-account', {
+      const response = await fetch('https://manaercynbdf-miccs.ondigitalocean.app/delete-account', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

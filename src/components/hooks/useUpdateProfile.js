@@ -22,7 +22,7 @@ export const useUpdateProfile = (token, setUser, setToken) => {
     }
 
     try {
-      const response = await fetch('http://managersyncbdf.test/api/update-Profile', {
+      const response = await fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/update-Profile', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
