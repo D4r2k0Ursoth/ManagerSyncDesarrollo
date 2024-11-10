@@ -32,7 +32,7 @@ export function MantenimientoProductos() {
   const [editingProduct, setEditingProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [cliente, setCliente] = useState(null);
+
 
   const { logout } = useAccountManagement();
 
