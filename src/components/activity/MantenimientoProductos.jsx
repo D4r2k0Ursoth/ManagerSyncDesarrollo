@@ -424,13 +424,13 @@ export function MantenimientoProductos() {
                     <td className="p-3">{producto.categoria}</td>
                     <td className="p-3">
                     <button
-                        onClick={() => handleEdit(cliente)}
+                        onClick={() => handleEdit(producto)}
                         className="text-sm text-center font-medium mt-1 px-8 mb-3 py-1 rounded-xl bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200" >
                         Editar
                       </button>
 
                       <button
-                        onClick={() => handleDelete(cliente.id)}
+                        onClick={() => handleDelete(producto.id)}
                         className="text-sm text-center font-medium mt-1 px-6 py-1 rounded-xl bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200" >
                         Eliminar
                       </button>
