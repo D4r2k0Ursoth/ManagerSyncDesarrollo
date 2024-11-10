@@ -42,7 +42,7 @@ export function MantenimientoClientes() {
 
     const cliente = { nombre, direccion, telefono, email, cedula, empresa_id: user?.empresa_id || '', };
 
-    fetch('http://localhost/managersyncbdf/public/api/clientes', {
+    fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/clientes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ export function MantenimientoClientes() {
   };
 
   const handleDelete = (id) => {
-    fetch(`http://localhost/managersyncbdf/public/api/clientes/${id}`, {
+    fetch(`https://manaercynbdf-miccs.ondigitalocean.app/api/clientes/${id}`, {
       method: 'DELETE',
     })
       .then(response => {
@@ -89,7 +89,7 @@ export function MantenimientoClientes() {
     
     const updatedCliente = { nombre, direccion, telefono, email, cedula };
 
-    fetch(`http://localhost/managersyncbdf/public/api/clientes/${editingCliente}`, {
+    fetch(`https://manaercynbdf-miccs.ondigitalocean.app/api/clientes/${editingCliente}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
