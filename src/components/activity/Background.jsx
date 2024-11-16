@@ -7,6 +7,7 @@ export function BackgroundAnimation() {
     const [isVisible, setIsVisible] = useState(false);
     let timer;
 
+    
     useEffect(() => {
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d');
