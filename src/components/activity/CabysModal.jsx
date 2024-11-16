@@ -1,147 +1,108 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-export function CabysModal({ isOpen, onClose, cabysData, onCabysSelect }) {
-  // Hooks iniciales
-  const [itemsPerPage] = useState(4);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [searchTerm, setSearchTerm] = useState(''); // Estado para la búsqueda
-  const [selectedCategory, setSelectedCategory] = useState(''); // Estado para la categoría seleccionada
+export function CabysModal({ isOpen, onClose, onCabysSelect }) {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [apiData, setApiData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  // Función de filtrado sin condicional dentro del hook
-  const filteredData = cabysData.filter(item => {
-    // Filtro por categoría
-    const categoryMatch = selectedCategory
-      ? Object.keys(item).some(key =>
-          key.startsWith('codigo_cabys_categoria_') && item[key] === selectedCategory
-        )
-      : true;
+  const fetchApiData = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch(`https://api.hacienda.go.cr/fe/cabys?q=${searchTerm}`);
+      if (!response.ok) {
+        throw new Error('Error al buscar datos en la API externa');
+      }
+      const data = await response.json();
 
-    // Filtro por término de búsqueda
-    const searchMatch = searchTerm
-      ? Object.values(item).some(value =>
-          String(value).toLowerCase().includes(searchTerm.toLowerCase())
-        )
-      : true;
+      // Log para inspeccionar datos de la API
+      console.log('Datos obtenidos de la API:', data);
 
-    return categoryMatch && searchMatch;
-  });
-
-  // Paginación
-  const paginatedData = filteredData.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
-
-  const handleNextPage = () => {
-    if ((currentPage + 1) * itemsPerPage < filteredData.length) {
-      setCurrentPage(currentPage + 1);
+      setApiData(data.cabys || []);
+    } catch (error) {
+      setError('Hubo un error al buscar los datos.');
+    } finally {
+      setLoading(false);
     }
   };
-
-  const handlePrevPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  useEffect(() => {
-    setCurrentPage(0); 
-  }, [selectedCategory, searchTerm]);
 
   if (!isOpen) return null;
 
   return (
-    <div className=" fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="mt-8 bg-white p-6 rounded-lg shadow-lg w-3/4 max-h-full overflow-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-3/4 max-h-full overflow-auto">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold">Seleccionar Producto CABYS</h2>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 font-bold text-xl">
+            className="text-gray-500 hover:text-gray-700 font-bold text-xl"
+          >
             &times;
           </button>
         </div>
-        
-      <div className='flex flex-row justify-between'>
-        {/* Campo de búsqueda */}
-        <div className="mb-4">
+        <div className="flex mb-4">
           <input
             type="text"
             placeholder="Buscar productos"
-            className="min-w-96  p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-600"
+            className="flex-1 p-3 border border-gray-300 rounded-l-md focus:ring-2 focus:ring-cyan-600"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-        </div>
-
-        {/* Filtro por categoría */}
-        <div className="mb-4">
-          <select
-            className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-600"
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
+          <button
+            onClick={fetchApiData}
+            className="px-4 py-2 bg-sky-600 text-white rounded-r-md hover:bg-sky-800"
           >
-            <option value="">Todas las Categorías</option>
-            {Array.from({ length: 9 }, (_, i) => (
-              <option key={i} value={String(i)}>
-                Categoría {i}
-              </option>
-            ))}
-          </select>
-        </div>
-    </div>
-        {/* Listado de productos CABYS filtrado */}
-        <div className="grid grid-cols-2 gap-4 overflow-clip overflow-x-hidden overflow-y-visible h-96">
-          {paginatedData.map((item, index) => (
-            <div key={index} className="border border-gray-300 p-4 rounded-lg">
-              {Array.from({ length: 9 }, (_, i) => {
-                const categoriaIndex = i + 1;
-                const codigoCabys = item[`codigo_cabys_categoria_${categoriaIndex}`];
-                const descripcionCabys = item[`descripcion_categoria_${categoriaIndex}`];
-
-                return (
-                  <div key={categoriaIndex}>
-                    {codigoCabys && (
-                      <p>
-                        <strong>Código Categoría {categoriaIndex}:</strong> {codigoCabys}
-                        <button
-                          onClick={() => onCabysSelect(item, categoriaIndex)}
-                          className="text-cyan-600 hover:underline ml-2">
-                          Seleccionar
-                        </button>
-                      </p>
-                    )}
-                    {descripcionCabys && (
-                      <p><strong>Descripción:</strong> {descripcionCabys}</p>
-                    )}
-                    {item.impuesto && (
-                      <p className='mb-5'><strong>Impuesto:</strong> {item.impuesto}%</p>
-                    )}
-                    {item.nota_explicativa && (
-                      <p><strong>Nota Explicativa:</strong> {item.nota_explicativa}</p>
-                    )}
-                    {item.nota_no_explicativa && (
-                      <p className='mb-5'><strong>Nota No Explicativa:</strong> {item.nota_no_explicativa}</p>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          ))}
-        </div>
-
-        {/* Controles de paginación */}
-        <div className="flex justify-between mt-4">
-          <button
-            onClick={handlePrevPage}
-            disabled={currentPage === 0}
-            className="text-sm text-center font-medium mt-1 px-6 py-1 rounded-xl bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200">
-            Ver Menos
-          </button>
-          <button
-            onClick={handleNextPage}
-            disabled={(currentPage + 1) * itemsPerPage >= filteredData.length}
-            className="text-sm text-center font-medium mt-1 px-6 py-1 rounded-xl bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200">
-            Ver Más
+            Buscar
           </button>
         </div>
+        {loading && <div className="text-center">Cargando...</div>}
+        {error && <div className="text-center text-red-500">{error}</div>}
+        {!loading && apiData.length > 0 && (
+          <div className="overflow-auto">
+            <table className="w-full table-auto border-collapse border border-gray-300">
+              <thead>
+                <tr className="bg-gray-100">
+                  <th className="border border-gray-300 px-4 py-2 text-left">Código CABYS</th>
+                  <th className="border border-gray-300 px-4 py-2 text-left">Descripción</th>
+                  <th className="border border-gray-300 px-4 py-2 text-left">Categorías</th>
+                  <th className="border border-gray-300 px-4 py-2 text-center">Impuesto</th>
+                  <th className="border border-gray-300 px-4 py-2 text-center">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {apiData.map((item, index) => (
+                  <tr key={index} className="hover:bg-gray-50">
+                    <td className="border border-gray-300 px-4 py-2">{item.codigo}</td>
+                    <td className="border border-gray-300 px-4 py-2">{item.descripcion}</td>
+                    <td className="border border-gray-300 px-4 py-2">
+                      {item.categorias?.join(', ') || 'Sin categorías'}
+                    </td>
+                    <td className="border border-gray-300 px-4 py-2 text-center">{item.impuesto}%</td>
+                    <td className="border border-gray-300 px-4 py-2 text-center">
+                      <button
+                        onClick={() =>
+                          onCabysSelect({
+                            codigo: item.codigo,
+                            descripcion: item.descripcion,
+                            categoria: item.categorias?.join(', ') || 'Sin categorías',
+                            impuesto: item.impuesto || 0,
+                          })
+                        }
+                        className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-800"
+                      >
+                        Seleccionar
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+        {!loading && !error && apiData.length === 0 && (
+          <div className="text-center text-gray-500">No se encontraron resultados.</div>
+        )}
       </div>
     </div>
   );

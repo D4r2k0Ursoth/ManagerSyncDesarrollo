@@ -1,16 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Header } from '../Header.jsx';
 import { Footer } from '../Footer.jsx';
-import { BackgroundAnimation } from './Background.jsx';
-import { useAccountManagement } from '../hooks/useAccountManagement';
 import { Sidebar } from '../Sidebar.jsx';
 import { CabysModal } from './CabysModal.jsx';
 import { useUser } from '../hooks/UserContext';
+import { useAccountManagement } from '../hooks/useAccountManagement';
 import { Loading } from './Loading.jsx';
-import { div } from 'framer-motion/client';
 
 export function MantenimientoProductos() {
-  const {  user } = useUser();
+  const { user } = useUser();
   const [codigoProducto, setCodigoProducto] = useState('');
   const [codigoCabys, setCodigoCabys] = useState('');
   const [nombre, setNombre] = useState('');
@@ -24,58 +22,31 @@ export function MantenimientoProductos() {
   const [porcentajeIVA, setPorcentajeIVA] = useState(0);
   const [categoria, setCategoria] = useState('');
   const [productos, setProductos] = useState([]);
-  const [cabysData, setCabysData] = useState([]);
-  const [loadingProductos, setLoadingProductos] = useState(true);
-  const [loadingCabys, setLoadingCabys] = useState(true);
-  const [categorias, setCategorias] = useState([]);
-  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState('');
-  const [editingProduct, setEditingProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-
+  const [loadingProductos, setLoadingProductos] = useState(true);
+  const [editingProductId, setEditingProductId] = useState(null); // Para manejar la edición
 
   const { logout } = useAccountManagement();
 
- const fetchProductos = () => {
-  fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/productos/all')
-    .then(response => response.json())
-    .then(data => {
-      // Filtra los productos por empresa_id del usuario logueado
-      const productosFiltrados = data.filter(producto => producto.empresa_id === user?.empresa_id);
-      setProductos(productosFiltrados);
-      console.log('Productos de la empresa:', productosFiltrados);
-      setLoadingProductos(false);
-    })
-    .catch(error => {
-      console.error('Error fetching productos:', error);
-      setLoadingProductos(false);
-    });
-};
-
-
-  const fetchCabysData = () => {
-    fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/cabys-json')
-      .then(response => response.json())
-      .then(data => {
-        if (Array.isArray(data.data)) {
-          setCabysData(data.data);
-          console.log('Datos CABYS:', data.data);
-          const categorias = [...new Set(data.data.map(item => item.codigo_cabys_categoria_1))];
-          setCategorias(categorias);
-        } else {
-          setCabysData([]);
-        }
-        setLoadingCabys(false);
+  const fetchProductos = () => {
+    setLoadingProductos(true);
+    fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/productos/all')
+      .then((response) => response.json())
+      .then((data) => {
+        const productosFiltrados = data.filter(
+          (producto) => producto.empresa_id === user?.empresa_id
+        );
+        setProductos(productosFiltrados);
+        setLoadingProductos(false);
       })
-      .catch(error => {
-        console.error('Error fetching CABYS data:', error);
-        setLoadingCabys(false);
+      .catch((error) => {
+        console.error('Error al obtener los productos:', error);
+        setLoadingProductos(false);
       });
   };
 
   useEffect(() => {
     fetchProductos();
-    fetchCabysData();
   }, []);
 
   const clearForm = () => {
@@ -91,17 +62,22 @@ export function MantenimientoProductos() {
     setPorcentajeDescuento(0);
     setPorcentajeIVA(0);
     setCategoria('');
-    setEditingProduct(null);
+    setEditingProductId(null);
   };
+  const handleSelectCabys = (item) => {
+    setCodigoCabys(item.codigo); // Cargar el código CABYS
+    setDescripcion(item.descripcion); // Cargar la descripción del producto
+    setCategoria(item.categoria ); // Cargar la primera categoría disponible o un valor por defecto
+    setPorcentajeIVA(item.impuesto || 0); // Cargar el porcentaje de IVA
+    setNombre(item.descripcion); // Opcional: asignar el nombre automáticamente si aplica
+    setIsModalOpen(false); // Cerrar el modal
+  };
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    // Si estamos editando un producto, el ID no debe ser nulo
-    const isEditing = editingProduct !== null;
-  
     const producto = {
-      empresa_id: user?.empresa_id || '', 
+      empresa_id: user?.empresa_id || '',
       codigo_producto: codigoProducto,
       codigo_cabys: codigoCabys,
       nombre,
@@ -113,52 +89,44 @@ export function MantenimientoProductos() {
       peso_por_unidad: parseFloat(pesoPorUnidad),
       porcentaje_descuento: parseFloat(porcentajeDescuento),
       porcentaje_iva: parseFloat(porcentajeIVA),
-      categoria
+      categoria,
     };
-  
-    if (isEditing) {
-      // Si se está editando, enviar una solicitud PUT con el ID correcto
-      fetch(`https://manaercynbdf-miccs.ondigitalocean.app/api/productos/${editingProduct}`, {
+
+    if (editingProductId) {
+      // Editar producto existente
+      fetch(`https://manaercynbdf-miccs.ondigitalocean.app/api/productos/${editingProductId}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(producto),
       })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Error al actualizar el producto');
-        }
-        return response.json();
-      })
-      .then(() => {
-        clearForm();
-        fetchProductos();
-      })
-      .catch(error => console.error('Error al actualizar producto:', error));
+        .then((response) => {
+          if (!response.ok) throw new Error('Error al actualizar producto');
+          return response.json();
+        })
+        .then(() => {
+          clearForm();
+          fetchProductos();
+        })
+        .catch((error) => console.error('Error al actualizar producto:', error));
     } else {
-      // Si no estamos editando, enviar una solicitud POST para crear uno nuevo
+      // Agregar nuevo producto
       fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/productos', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(producto),
       })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Error al crear producto');
-        }
-        return response.json();
-      })
-      .then(() => {
-        clearForm();
-        fetchProductos();
-      })
-      .catch(error => console.error('Error al crear producto:', error));
+        .then((response) => {
+          if (!response.ok) throw new Error('Error al crear producto');
+          return response.json();
+        })
+        .then(() => {
+          clearForm();
+          fetchProductos();
+        })
+        .catch((error) => console.error('Error al crear producto:', error));
     }
   };
-  
+
   const handleEdit = (producto) => {
     setCodigoProducto(producto.codigo_producto);
     setCodigoCabys(producto.codigo_cabys);
@@ -172,67 +140,53 @@ export function MantenimientoProductos() {
     setPorcentajeDescuento(producto.porcentaje_descuento);
     setPorcentajeIVA(producto.porcentaje_iva);
     setCategoria(producto.categoria);
-    setEditingProduct(producto.id); // Guardar el ID del producto que se está editando
+    setEditingProductId(producto.id);
   };
-  
+
   const handleDelete = (id) => {
     if (window.confirm('¿Estás seguro de que deseas eliminar este producto?')) {
       fetch(`https://manaercynbdf-miccs.ondigitalocean.app/api/productos/${id}`, {
         method: 'DELETE',
       })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Error al eliminar el producto');
-          }
+        .then((response) => {
+          if (!response.ok) throw new Error('Error al eliminar producto');
           return response.json();
         })
         .then(() => {
-          fetchProductos(); // Actualizar la lista de productos después de eliminar
+          fetchProductos();
         })
-        .catch(error => console.error('Error al eliminar producto:', error));
+        .catch((error) => console.error('Error al eliminar producto:', error));
     }
   };
-  
-  const handleSelectCabys = (item, categoriaIndex) => {
-    const descripcion = item[`descripcion_categoria_${categoriaIndex}`];
-    const impuesto = parseFloat(item.impuesto) || 0;
 
-    setCodigoCabys(item[`codigo_cabys_categoria_${categoriaIndex}`] || '');
-    setNombre(item.nombre || '');
-    setDescripcion(descripcion || '');
-    setPrecioCompra(item.precio_compra || '');
-    setPrecioConsumidor(item.precio_consumidor || '');
-    setStock(item.stock || '');
-    setUnidadMedida(item.unidad_medida || '');
-    setPesoPorUnidad(item.peso_por_unidad || '');
-    setCategoria(descripcion || '');
-    setPorcentajeIVA(impuesto);
-    setIsModalOpen(false);
-  };
-
-  if (loadingProductos || loadingCabys) {
-    return <div className='duration-700'> <Loading/> </div>;
+  if (loadingProductos) {
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   }
 
   return (
     <>
       <Header />
-      <div className="bg-slate-300  w-screen flex h-max gap-0 overflow-x-hidden">
-      <div className="basis-1/4 mr-4 h-full pb-96 lg:bg-slate-50">
-          <Sidebar logout={logout}/>
+      <div className="bg-slate-300 w-screen flex h-max gap-0 overflow-x-hidden">
+        <div className="basis-1/4 mr-4 h-full pb-96 lg:bg-slate-50">
+          <Sidebar logout={logout} />
         </div>
         <div className="lg:flex lg:gap-7">
-          
-          <div className="lg:basis-2/4 w-3/12 lg:w-96 py-2 h-min pt-12 p-6 mx-auto mt-6  mb-4 lg:ml-6 -ml-10 lg:mr-0  bg-white rounded-lg shadow-lg">
-            <h1 className="text-3xl font-bold text-gray-800 mb-6 -mt-2">{editingProduct ? 'Actualizar Producto' : 'Registrar Producto'}</h1>
-                      {/* Botón para abrir el modal de CABYS */}
-          <div className="bg-white p-2 mb-6 rounded-lg shadow-md">
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="-mt-4 px-2 py-2 text-white bg-sky-900 rounded-xl hover:bg-indigo-900 w-full font-bold transition duration-200">
-              Seleccionar CABYS
-            </button>
-          </div>
+          <div className="lg:basis-2/4 w-3/12 lg:w-96 py-2 h-min pt-12 p-6 mx-auto mt-6 mb-4 lg:ml-6 -ml-10 lg:mr-0 bg-white rounded-lg shadow-lg">
+            <h1 className="text-3xl font-bold text-gray-800 mb-6 -mt-2">
+              {editingProductId ? 'Actualizar Producto' : 'Registrar Producto'}
+            </h1>
+            <div className="bg-white p-2 mb-6 rounded-lg shadow-md">
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="-mt-4 px-2 py-2 text-white bg-sky-900 rounded-xl hover:bg-indigo-900 w-full font-bold transition duration-200"
+              >
+                Seleccionar CABYS
+              </button>
+            </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
@@ -345,9 +299,9 @@ export function MantenimientoProductos() {
                   className="w-full mt-1 p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-700"
                   value={porcentajeDescuento}
                   onChange={(e) => setPorcentajeDescuento(e.target.value)}
-                  required
                   min="0"
                   max="100"
+                  required
                 />
               </div>
               <div>
@@ -357,9 +311,9 @@ export function MantenimientoProductos() {
                   className="w-full mt-1 p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-700"
                   value={porcentajeIVA}
                   onChange={(e) => setPorcentajeIVA(e.target.value)}
-                  required
                   min="0"
                   max="100"
+                  required
                 />
               </div>
               <div>
@@ -375,13 +329,15 @@ export function MantenimientoProductos() {
               <div className="flex justify-between my-6">
                 <button
                   type="submit"
-                  className={`bg-${editingProduct ? 'sky-700' : 'sky-900'}  text-sm text-center font-medium mb-3 mt-3 px-4 py-2 rounded-xl text-white shadow hover:bg-${editingProduct ? 'indigo-700' : 'indigo-900'} transition duration-200`} >
-                  {editingProduct ? 'Actualizar' : 'Agregar'}
+                  className="bg-sky-900 text-sm text-center font-medium mb-3 mt-3 px-4 py-2 rounded-xl text-white shadow hover:bg-indigo-900 transition duration-200"
+                >
+                  {editingProductId ? 'Actualizar' : 'Agregar'}
                 </button>
                 <button
                   type="button"
                   onClick={clearForm}
-                  className="text-sm text-center font-medium mt-1 px-6 py-1 rounded-xl bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200" >
+                  className="text-sm text-center font-medium mt-1 px-6 py-1 rounded-xl bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200"
+                >
                   Cancelar
                 </button>
               </div>
@@ -389,68 +345,68 @@ export function MantenimientoProductos() {
           </div>
 
           <div className="lg:flex">
-          <div className="lg:basis-2/4 lg:gap-4 lg:mr-10 lg:w-7/12 w-3/12 py-2 mb-4 h-min lg:ml-0 -ml-10 pt-12 p-6 mx-auto mt-6 pb-12 bg-white rounded-lg shadow-lg">
-          <h2 className="text-3xl font-bold text-gray-800 mb-6 -mt-2">Productos Registrados</h2>
-          <div className="overflow-scroll px-2">
-
-          <table className="w-full bg-white shadow-md rounded-lg overflow-hidden">
-          <thead className="bg-gray-100 text-gray-600 uppercase text-sm text-center rounded-xl ">
-                <tr>
-                  <th className="p-3 text-left">Código CABYS</th>
-                  <th className="p-3 text-left">Código Producto</th>
-                  <th className="p-3 text-left">Nombre</th>
-                  <th className="p-3 text-left">Descripción</th>
-                  <th className="p-3 text-left">Precio Compra</th>
-                  <th className="p-3 text-left">Precio Consumidor</th>
-                  <th className="p-3 text-left">Stock</th>
-                  <th className="p-3 text-left">Unidad Medida</th>
-                  <th className="p-3 text-left">Peso Unidad</th>
-                  <th className="p-3 text-left">Categoría</th>
-                  <th className="p-3 text-left">Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {productos.map((producto) => (
-                  <tr key={producto.id} className="border-b border-gray-200 text-sm">
-                    <td className="p-3">{producto.codigo_cabys}</td>
-                    <td className="p-3">{producto.codigo_producto}</td>
-                    <td className="p-3">{producto.nombre}</td>
-                    <td className="p-3">{producto.descripcion}</td>
-                    <td className="p-3">{parseFloat(producto.precio_compra).toFixed(2)}</td>
-                    <td className="p-3">{parseFloat(producto.precio_consumidor).toFixed(2)}</td>
-                    <td className="p-3">{producto.stock}</td>
-                    <td className="p-3">{producto.unidad_medida}</td>
-                    <td className="p-3">{producto.peso_por_unidad}</td>
-                    <td className="p-3">{producto.categoria}</td>
-                    <td className="p-3">
-                    <button
-                        onClick={() => handleEdit(producto)}
-                        className="text-sm text-center font-medium mt-1 px-8 mb-3 py-1 rounded-xl bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200" >
-                        Editar
-                      </button>
-
-                      <button
-                        onClick={() => handleDelete(producto.id)}
-                        className="text-sm text-center font-medium mt-1 px-6 py-1 rounded-xl bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200" >
-                        Eliminar
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className="lg:basis-2/4 lg:gap-4 lg:mr-10 lg:w-7/12 w-3/12 py-2 mb-4 h-min lg:ml-0 -ml-10 pt-12 p-6 mx-auto mt-6 pb-12 bg-white rounded-lg shadow-lg">
+              <h2 className="text-3xl font-bold text-gray-800 mb-6 -mt-2">Productos Registrados</h2>
+              <div className="overflow-scroll px-2">
+                <table className="w-full bg-white shadow-md rounded-lg overflow-hidden">
+                  <thead className="bg-gray-100 text-gray-600 uppercase text-sm text-center rounded-xl">
+                    <tr>
+                      <th className="p-3 text-left">Código CABYS</th>
+                      <th className="p-3 text-left">Código Producto</th>
+                      <th className="p-3 text-left">Nombre</th>
+                      <th className="p-3 text-left">Descripción</th>
+                      <th className="p-3 text-left">Precio Compra</th>
+                      <th className="p-3 text-left">Precio Consumidor</th>
+                      <th className="p-3 text-left">Stock</th>
+                      <th className="p-3 text-left">Unidad Medida</th>
+                      <th className="p-3 text-left">Peso Unidad</th>
+                      <th className="p-3 text-left">Categoría</th>
+                      <th className="p-3 text-left">% IVA</th>
+                      <th className="p-3 text-left">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {productos.map((producto) => (
+                      <tr key={producto.id} className="border-b border-gray-200 text-sm">
+                        <td className="p-3">{producto.codigo_cabys}</td>
+                        <td className="p-3">{producto.codigo_producto}</td>
+                        <td className="p-3">{producto.nombre}</td>
+                        <td className="p-3">{producto.descripcion}</td>
+                        <td className="p-3">{parseFloat(producto.precio_compra).toFixed(2)}</td>
+                        <td className="p-3">{parseFloat(producto.precio_consumidor).toFixed(2)}</td>
+                        <td className="p-3">{producto.stock}</td>
+                        <td className="p-3">{producto.unidad_medida}</td>
+                        <td className="p-3">{producto.peso_por_unidad}</td>
+                        <td className="p-3">{producto.categoria}</td>
+                        <td className="p-3">{producto.porcentaje_iva}%</td>
+                        <td className="p-3">
+                          <button
+                            onClick={() => handleEdit(producto)}
+                            className="text-sm text-center font-medium mt-1 px-8 mb-3 py-1 rounded-xl bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200"
+                          >
+                            Editar
+                          </button>
+                          <button
+                            onClick={() => handleDelete(producto.id)}
+                            className="text-sm text-center font-medium mt-1 px-6 py-1 rounded-xl bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200"
+                          >
+                            Eliminar
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
-          {/* Modal para mostrar la lista de CABYS */}
-          <CabysModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-            cabysData={cabysData}
-            onCabysSelect={handleSelectCabys}
-          />
         </div>
       </div>
-      </div>
-      </div>
+      <CabysModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onCabysSelect={handleSelectCabys}
+      />
       <Footer />
     </>
   );
