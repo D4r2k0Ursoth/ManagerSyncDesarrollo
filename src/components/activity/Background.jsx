@@ -8,6 +8,7 @@ export function BackgroundAnimation() {
     let timer;
 
     
+    
     useEffect(() => {
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d');
