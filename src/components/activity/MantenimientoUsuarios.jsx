@@ -263,7 +263,6 @@ const fetchUsuarios = async () => {
                   <th className="border px-4 py-2">Nombre</th>
                   <th className="border px-4 py-2">Email</th>
                   <th className="border px-4 py-2">Rol</th>
-                  <th className="border px-4 py-2">ID de empresa</th>
                   <th className="border px-4 py-2">Acciones</th>
                 </tr>
               </thead>
