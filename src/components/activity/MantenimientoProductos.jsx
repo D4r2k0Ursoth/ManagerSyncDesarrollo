@@ -279,6 +279,7 @@ export function MantenimientoProductos() {
                   <option value="m">Metros (m)</option>
                   <option value="in">Pulgadas (in)</option>
                   <option value="ft">Pies (ft)</option>
+                  <option value="Sp">Servicios profesionales (Sp)</option>
                 </select>
               </div>
               <div>

@@ -230,36 +230,6 @@ const fetchUsuarios = async () => {
     readOnly
   />
 </div>
-
-<div>
-  <label className="block text-gray-700 font-semibold">Empresa</label>
-  <input
-    type="text"
-    name="empresa"
-    className="w-full mt-1 p-2 border border-gray-300 rounded-md"
-    value={formData.empresa}
-    readOnly
-  />
-</div>
-
-              <div className="mb-2">
-                <label htmlFor="role" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  Rol
-                </label>
-                <select
-                  id="role"
-                  name="role" // Asegúrate de incluir el atributo name
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-700 block w-full p-2.5"
-                  value={formData.role}
-                  onChange={handleChange}
-                  required>
-                  <option value="">Seleccione un rol</option> {/* Opción para seleccionar un rol */}
-                  <option value="admin">Administrador</option>
-                  <option value="contador">Contador</option>
-                  <option value="empleado">Empleado</option>
-                </select>
-              </div>
-
               {!editingUsuario && (
                 <>
                   <div>
