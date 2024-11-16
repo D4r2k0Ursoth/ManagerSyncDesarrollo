@@ -220,16 +220,6 @@ const fetchUsuarios = async () => {
                   required
                 />
               </div>
-              <div>
-  <label className="block text-gray-700 font-semibold">Cédula Empresa</label>
-  <input
-    type="text"
-    name="cedula_empresa"
-    className="w-full mt-1 p-2 border border-gray-300 rounded-md"
-    value={formData.cedula_empresa}
-    readOnly
-  />
-</div>
               {!editingUsuario && (
                 <>
                   <div>
