@@ -12,6 +12,41 @@ export function MantenimientoEmpresas() {
   const [provincia, setProvincia] = useState('');
   const [canton, setCanton] = useState('');
   const [distrito, setDistrito] = useState('');
+
+
+
+  const [provincias, setProvincias] = useState([]);
+  const [cantones, setCantones] = useState([]);
+  const [distritos, setDistritos] = useState([]);
+  useEffect(() => {
+    // Cargar provincias al montar el componente
+    fetch('https://ubicaciones.paginasweb.cr/provincias.json')
+      .then((response) => response.json())
+      .then((data) => setProvincias(Object.entries(data)))
+      .catch((error) => console.error('Error al cargar provincias:', error));
+  }, []);
+
+  useEffect(() => {
+    if (provincia) {
+      // Cargar cantones según la provincia seleccionada
+      fetch(`https://ubicaciones.paginasweb.cr/provincia/${provincia}/cantones.json`)
+        .then((response) => response.json())
+        .then((data) => setCantones(Object.entries(data)))
+        .catch((error) => console.error('Error al cargar cantones:', error));
+    }
+  }, [provincia]);
+
+  useEffect(() => {
+    if (canton) {
+      // Cargar distritos según el cantón seleccionado
+      fetch(`https://ubicaciones.paginasweb.cr/provincia/${provincia}/canton/${canton}/distritos.json`)
+        .then((response) => response.json())
+        .then((data) => setDistritos(Object.entries(data)))
+        .catch((error) => console.error('Error al cargar distritos:', error));
+    }
+  }, [canton]);
+
+  
   const [descripcion, setDescripcion] = useState('');
   const [otrasSenas, setOtrasSenas] = useState('');
   const [empresa, setEmpresa] = useState('juridica'); // valor inicial para tipo de empresa
@@ -22,7 +57,9 @@ export function MantenimientoEmpresas() {
   const [isValidatingCedula, setIsValidatingCedula] = useState(false);
 const [empresaData, setEmpresaData] = useState({});
   const fetchEmpresas = () => {
+
     fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/empresas')
+
       .then(response => response.json())
       .then(data => {
         setEmpresas(data);
@@ -312,35 +349,52 @@ const [empresaData, setEmpresaData] = useState({});
 
               <div>
                 <label className="block text-gray-700 font-semibold">Provincia</label>
-                <input
-                  type="text"
-                  className="w-full mt-1 p-2 border border-gray-300 rounded-md mb-0.5"
-                  value={provincia}
-                  onChange={(e) => setProvincia(e.target.value)}
-                  required
-                />
+                <select
+            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+            value={provincia}
+            onChange={(e) => setProvincia(e.target.value)}
+          >
+            <option value="">Seleccione una provincia</option>
+            {provincias.map(([code, name]) => (
+              <option key={code} value={code}>
+                {name}
+              </option>
+            ))}
+          </select>
               </div>
 
               <div>
                 <label className="block text-gray-700 font-semibold">Cantón</label>
-                <input
-                  type="text"
-                  className="w-full mt-1 p-2 border border-gray-300 rounded-md mb-0.5"
-                  value={canton}
-                  onChange={(e) => setCanton(e.target.value)}
-                  required
-                />
+                <select
+            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+            value={canton}
+            onChange={(e) => setCanton(e.target.value)}
+            disabled={!provincia}
+          >
+            <option value="">Seleccione un cantón</option>
+            {cantones.map(([code, name]) => (
+              <option key={code} value={code}>
+                {name}
+              </option>
+            ))}
+          </select>
               </div>
 
               <div>
                 <label className="block text-gray-700 font-semibold">Distrito</label>
-                <input
-                  type="text"
-                  className="w-full mt-1 p-2 border border-gray-300 rounded-md mb-0.5"
-                  value={distrito}
-                  onChange={(e) => setDistrito(e.target.value)}
-                  required
-                />
+                <select
+            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+            value={distrito}
+            onChange={(e) => setDistrito(e.target.value)}
+            disabled={!canton}
+          >
+            <option value="">Seleccione un distrito</option>
+            {distritos.map(([code, name]) => (
+              <option key={code} value={code}>
+                {name}
+              </option>
+            ))}
+          </select>
               </div>
 
               <div>
