@@ -6,6 +6,7 @@ import { CabysModal } from './CabysModal.jsx';
 import { useUser } from '../hooks/UserContext';
 import { useAccountManagement } from '../hooks/useAccountManagement';
 import { Loading } from './Loading.jsx';
+import Cloudinary from './Cloudinary.jsx'
 
 export function MantenimientoProductos() {
   const { user } = useUser();
@@ -170,30 +171,29 @@ export function MantenimientoProductos() {
   return (
     <>
       <Header />
-      <div className="bg-slate-300 w-screen flex h-max gap-0 overflow-x-hidden">
-        <div className="basis-1/4 mr-4 h-full pb-96 lg:bg-slate-50">
+      <div className="bg-slate-300 w-screen flex h-fit gap-0 overflow-x-hidden">
+        <div className="basis-1/4 mr-4 h-full">
           <Sidebar logout={logout} />
         </div>
-        <div className="lg:flex lg:gap-7">
-          <div className="lg:basis-2/4 w-3/12 lg:w-96 py-2 h-min pt-12 p-6 mx-auto mt-6 mb-4 lg:ml-6 -ml-10 lg:mr-0 bg-white rounded-lg shadow-lg">
+        <div className="lg:flex lg:gap-4">
+        <div className="py-2 lg:w-max w-3/12 lg:min-w-max  h-min pt-12 p-6 mx-auto mt-6  mb-4 ml-1 lg:ml-3 mr-4 bg-white rounded-lg shadow-lg">
             <h1 className="text-3xl font-bold text-gray-800 mb-6 -mt-2">
               {editingProductId ? 'Actualizar Producto' : 'Registrar Producto'}
             </h1>
             <div className="bg-white p-2 mb-6 rounded-lg shadow-md">
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="-mt-4 px-2 py-2 text-white bg-sky-900 rounded-xl hover:bg-indigo-900 w-full font-bold transition duration-200"
-              >
+                className="-mt-4 px-2 py-2 text-white bg-sky-900 rounded-xl hover:bg-indigo-900 w-full font-bold transition duration-200">
                 Seleccionar CABYS
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-0 lg:grid lg:grid-cols-2 lg:gap-x-4 lg:gap-y-7">
               <div>
                 <label className="block text-gray-700 font-semibold">Código CABYS</label>
                 <input
                   type="text"
-                  className="w-full mt-1 p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-700"
+                  className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-700"
                   value={codigoCabys}
                   onChange={(e) => setCodigoCabys(e.target.value)}
                   required
@@ -203,7 +203,7 @@ export function MantenimientoProductos() {
                 <label className="block text-gray-700 font-semibold">Código de Producto</label>
                 <input
                   type="text"
-                  className="w-full mt-1 p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-700"
+                  className="w-full  p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-700"
                   value={codigoProducto}
                   onChange={(e) => setCodigoProducto(e.target.value)}
                   required
@@ -327,18 +327,16 @@ export function MantenimientoProductos() {
                   required
                 />
               </div>
-              <div className="flex justify-between my-6">
+              <div className="flex justify-around my-6 gap-4">
                 <button
                   type="submit"
-                  className="bg-sky-900 text-sm text-center font-medium mb-3 mt-3 px-4 py-2 rounded-xl text-white shadow hover:bg-indigo-900 transition duration-200"
-                >
+                  className="bg-sky-900 text-sm text-center font-medium mb-3 mt-3 px-4 py-2 rounded-xl text-white shadow hover:bg-indigo-900 transition duration-200">
                   {editingProductId ? 'Actualizar' : 'Agregar'}
                 </button>
                 <button
                   type="button"
                   onClick={clearForm}
-                  className="text-sm text-center font-medium mt-1 px-6 py-1 rounded-xl bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200"
-                >
+                  className="text-sm text-center font-medium mb-3 mt-3 px-6 py-2 rounded-xl bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200">
                   Cancelar
                 </button>
               </div>
@@ -346,7 +344,7 @@ export function MantenimientoProductos() {
           </div>
 
           <div className="lg:flex">
-            <div className="lg:basis-2/4 lg:gap-4 lg:mr-10 lg:w-7/12 w-3/12 py-2 mb-4 h-min lg:ml-0 -ml-10 pt-12 p-6 mx-auto mt-6 pb-12 bg-white rounded-lg shadow-lg">
+          <div className="lg:basis-1/4 lg:max-h-[80rem] lg:gap-4 lg:w-5/12 w-3/12 py-2 mb-4 h-min lg:ml-0 ml-1 pt-12 p-6 mx-auto mt-6 pb-12 bg-white rounded-lg shadow-lg">
               <h2 className="text-3xl font-bold text-gray-800 mb-6 -mt-2">Productos Registrados</h2>
               <div className="overflow-scroll px-2">
                 <table className="w-full bg-white shadow-md rounded-lg overflow-hidden">
@@ -383,14 +381,12 @@ export function MantenimientoProductos() {
                         <td className="p-3">
                           <button
                             onClick={() => handleEdit(producto)}
-                            className="text-sm text-center font-medium mt-1 px-8 mb-3 py-1 rounded-xl bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200"
-                          >
+                            className="text-sm text-center font-medium mt-1 px-8 mb-3 py-1 rounded-xl bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200">
                             Editar
                           </button>
                           <button
                             onClick={() => handleDelete(producto.id)}
-                            className="text-sm text-center font-medium mt-1 px-6 py-1 rounded-xl bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200"
-                          >
+                            className="text-sm text-center font-medium mt-1 px-6 py-1 rounded-xl bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200">
                             Eliminar
                           </button>
                         </td>
@@ -409,6 +405,7 @@ export function MantenimientoProductos() {
         onCabysSelect={handleSelectCabys}
       />
       <Footer />
+      <Cloudinary />
     </>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useUser } from "../hooks/UserContext";
 import { useAccountManagement } from '../hooks/useAccountManagement'; 
+
 import { Header } from "../Header.jsx";
 import { Detalle_facturas } from "./Detalle_facturas.jsx";
 import { Footer } from "../Footer.jsx";
@@ -50,6 +51,9 @@ export function Punto_venta() {
     fetchProductos();
   }, [user.empresa_id]); // Reemplaza el efecto cuando el empresa_id del usuario cambie
 
+
+
+//revisar aqui para aumento en el carrito
   const handleAgregarProducto = () => {
     if (selectedProducto) {
       const total = selectedProducto.precio_consumidor * cantidad;
@@ -111,7 +115,7 @@ export function Punto_venta() {
               {/* Botón para reiniciar la venta */}
               <button
                 onClick={handleReiniciarVenta}
-                className="lg:-mt-4 mt-3 ml-3 lg:mr-0 mr-4 lg:px-3 py-2 text-white bg-sky-900 rounded-xl hover:bg-indigo-900 lg:w-full w-11/12">
+                className="lg:-mt-4 mt-3 ml-3 lg:mr-0 mr-4 lg:px-3 py-2 font-medium text-white bg-sky-900 rounded-xl hover:bg-indigo-900 lg:w-full w-11/12">
                 Nueva Venta
               </button>
             </div>
@@ -132,9 +136,14 @@ export function Punto_venta() {
                 <div className="flex space-x-2">
                 <button
                   className="px-4 py-2 text-sm font-medium rounded-2xl bg-gray-100 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200"
-                  onClick={() => { window.location.href = '/MantenimientoClientes.jsx'; }}>
+                  onClick={() => { window.location.href = '/MantenimientoClientes'; }}>
                   Crear/Editar Cliente
                 </button>
+
+                
+                  <button className="px-4 py-2 text-sm font-medium rounded-2xl p-2 bg-gray-100 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200">
+                    Crear Exoneración
+                  </button>
                 </div>
               </div>
             </div>
@@ -164,7 +173,7 @@ export function Punto_venta() {
               </li>
             </ul>
 
-            <div className="grid grid-cols-6 p-2 gap-1">
+            <div className="grid grid-cols-6 p-2 gap-2">
               <div className="col-span-1">
                 <input
                   type="number"
@@ -176,10 +185,9 @@ export function Punto_venta() {
               </div>
               <div className="col-span-2">
                 <select
-                  className="w-full p-2 border rounded mb-4 lg:ml-0 -ml-1"
+                  className="w-full p-2 border rounded mb-4 lg:ml-0 -ml-1 focus:outline-none focus:ring-2 focus:ring-sky-700"
                   onChange={(e) => setSelectedProducto(JSON.parse(e.target.value))}
-                  value={selectedProducto ? JSON.stringify(selectedProducto) : ""}
-                >
+                  value={selectedProducto ? JSON.stringify(selectedProducto) : ""}>
                   <option value="">Seleccionar producto...</option>
                   {productos.map((producto) => (
                     <option key={producto.id} value={JSON.stringify(producto)}>
@@ -200,7 +208,7 @@ export function Punto_venta() {
               <div className="col-span-1">
                 <button
                   onClick={handleAgregarProducto}
-                  className="lg:px-4 px-2 py-2 lg:ml-0 ml-7 text-white bg-sky-900 rounded-xl hover:bg-indigo-900">
+                  className="lg:px-4 px-2 py-2 lg:ml-0 ml-7 font-medium text-white bg-sky-900 rounded-xl hover:bg-indigo-900">
                   Agregar
                 </button>
               </div>
@@ -236,7 +244,7 @@ export function Punto_venta() {
           </div>
         
 
-        <div className="lg:pt-2 lg:pr-12 lg:ml-4 mr-5">
+        <div className="lg:pt-2 lg:-mt-4 lg:pr-12 lg:ml-4 mr-5">
           <Detalle_facturas 
             subtotal={subtotal}
             totalIVA={totalIVA}

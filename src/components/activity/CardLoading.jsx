@@ -19,8 +19,7 @@ export function CardLoadingPage({ image00, image01, image02, image03 }) {
     initial= "hidden"
     whileInView={"show"}
     viewport={{once:true, amount:0.7}}
-    className='w-full  lg:flex lg:space-x-12 lg:relative items-center content-center lg:m-30 mr-5 lg:p-30 px-24'>
-
+    className='w-full items-center content-center px-24 lg:flex lg:space-x-12 lg:relative lg:m-30 mr-5 lg:p-30 '>
         <motion.div 
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
@@ -60,7 +59,7 @@ export function CardLoadingPage({ image00, image01, image02, image03 }) {
         transition={{ type: "spring", stiffness: 400, damping: 10 }}
         
         className='bg-white shadow-md p-4 rounded-md text-center content-center lg:mb-7 mb-24 lg:h-60 lg:w-40 w-full'>
-          <img src={image03} alt="Card 4" className='h-32 lg:w-32 w-full object-cover mx-auto lg:mb-0 mb-4' />
+          <img src={image03} alt="Card 4" className='h-32 w-32 object-cover mx-auto mb-4' />
           <h3 className='font-semibold lg:text-base text-2xl'>Usuarios</h3>
           <p className='text-gray-600 lg:text-sm text-1xl'>para vender o administrar</p>
         </motion.div>

@@ -118,7 +118,7 @@ export const Finalizar = ({
   return (
     <div className="p-2">
       <h3 className="text-xl font-bold mb-6">Finalizar Documento</h3>
-        <div className="lg:flex lg:grid-cols-2 lg:ml-0 -ml-8 justify-evenly align-top gap-44 px-16 py-6">
+        <div className="lg:flex lg:grid-cols-2 lg:-ml-3 lg:mr-8 -ml-8 justify-between align-top gap-44 px-16 py-6">
           <div>
             <h4 className="text-lg font-bold mb-4">Datos de Inicio:</h4>
             <p className='lg:lg:mb-1 mb-4 mb-'>Condición de Venta: {inicioData?.condicionVenta}</p>
@@ -140,7 +140,7 @@ export const Finalizar = ({
             <p className='lg:lg:mb-1 mb-4'>Barrio: {emisorData?.barrio}</p>
           </div></div> {/* grid cols*/}
           
-      <div className="lg:flex lg:grid-cols-2 lg:ml-0 -ml-8  justify-evenly align-top gap-44  px-16 py-6">
+      <div className="lg:flex lg:grid-cols-2 lg:-ml-3 -ml-8 justify-between align-top gap-44  px-16 py-6">
 
           <div>
             <h4 className="text-lg font-bold mb-4">Productos/Servicios:</h4>
@@ -202,7 +202,6 @@ export const Finalizar = ({
 </div>
       {/* Totales del Documento */}
       <h4 className="text-lg font-bold mb-4 mt-6">Totales del Documento</h4>
-
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-gray-700 font-bold mb-2">SubTotal</label>
@@ -211,7 +210,7 @@ export const Finalizar = ({
             name="subTotal"
             value={totales.subTotal}
             onChange={handleTotalesChange}
-            className="w-full border-2 border-gray-300 rounded-lg p-2"
+            className="w-full border-2 border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-sky-700"
           />
         </div>
 
@@ -222,7 +221,7 @@ export const Finalizar = ({
             name="impuestos"
             value={totales.impuestos}
             onChange={handleTotalesChange}
-            className="w-full border-2 border-gray-300 rounded-lg p-2"
+            className="w-full border-2 border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-sky-700"
           />
         </div>
 
@@ -233,7 +232,7 @@ export const Finalizar = ({
             name="descuentos"
             value={totales.descuentos}
             onChange={handleTotalesChange}
-            className="w-full border-2 border-gray-300 rounded-lg p-2"
+            className="w-full border-2 border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-sky-700"
           />
         </div>
 
@@ -244,7 +243,7 @@ export const Finalizar = ({
             name="total"
             value={totales.total}
             readOnly
-            className="w-full border-2 border-gray-300 rounded-lg p-2 bg-gray-100"
+            className="w-full border-2 border-gray-300 rounded-lg p-2 bg-gray-100 cursor-not-allowed"
           />
         </div>
       </div>

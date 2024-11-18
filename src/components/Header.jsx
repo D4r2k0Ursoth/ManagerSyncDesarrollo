@@ -17,7 +17,7 @@ export const Header = () => {
         <ReactSVG src="/Logo-completo.svg" className="h-30 w-30"/>
       </Link>
 
-      <div className="lg:hidden cursor-pointer justify-between"
+      <div className="lg:hidden md:hidden cursor-pointer justify-between"
           onClick={() => setMenuOpen(!menuOpen)}
           onKeyDown={() => setMenuOpen(!menuOpen)}>
             <img
@@ -30,15 +30,15 @@ export const Header = () => {
             />
         </div>
 
-        <ul className={`flex flex-col lg:flex-row md:space-x-8 md:items-center absolute md:static 
+        <ul className={`flex flex-col lg:flex-row md:flex-row md:space-x-8 md:items-center absolute md:static 
         top-16 right-0 w-full md:w-auto bg-white md:bg-transparent z-10 transform 
-        ${menuOpen ? 'lg:translate-0 lg:opacity-100 translate-x-0 opacity-100' : 'lg:translate-x-0 lg:opacity-100 translate-x-full opacity-0'} transition duration-300 ease-in-out`}>
+        ${menuOpen ? 'lg:translate-0 lg:opacity-100 md:translate-0 md:opacity-100  translate-x-0 opacity-100' : 'lg:translate-x-0 lg:opacity-100 md:translate-x-0 md:opacity-100 translate-x-full opacity-0'} transition duration-300 ease-in-out`}>
 
         {/* Mostrar solo si el usuario está autenticado */}
         {user ? (
-        <div className="flex lg:justify-end lg:space-x-1 lg:flex-row lg:mt-0 mt-3 ">  
-          <li className="lg:p-0 px-10 py-2 lg:bg-transparent bg-slate-200">
-            <div className="flex items-center lg:m-0 ml-1 lg:text-xl lg:mx-16 text-center ">
+      <div className="flex lg:justify-end lg:space-x-1 lg:flex-row lg:mt-0 md:justify-end md:space-x-1 md:flex-row md:mt-0 mt-3 ">  
+        <li className=" px-10 py-2 lg:p-0 lg:bg-transparent md:p-0 md:bg-transparent bg-slate-200">
+          <div className="flex items-center lg:m-0 ml-1 lg:text-xl lg:mx-16 md:m-0md:text-xl md:mx-16 text-center">
                 <Clock/>
               <div className="lg:m-5 lg:ml-12 lg:w-3 lg:h-3 lg:mx-1 w-2 h-2 bg-green-500 ml-10 rounded-full"/>
               
@@ -53,8 +53,8 @@ export const Header = () => {
         
         ) : (
           // Mostrar solo si no hay usuario autenticado
-      <>  <div className="lg:flex lg:ml-96 lg:gap-5 lg:basis-6/6 lg:justify-between lg:space-x-3 lg:flex-wrap ">
-            <li className=" lg:mt-0  lg:p-0 p-4 text-center lg:bg-transparent bg-slate-200"> 
+          <>  <div className="lg:flex lg:ml-96 lg:gap-6 lg:basis-6/6 lg:justify-between lg:space-x-3 md:flex-wrap md:flex md:ml-96 md:gap-5 md:basis-6/6 md:justify-between md:space-x-3 lg:flex-wrap ">
+          <li className=" lg:mt-0  lg:p-0 p-4 text-center lg:bg-transparent md:mt-0  md:p-0 md:bg-transparent bg-slate-200"> 
               <HashLink smooth to={'/#contacto'} 
                 className="lg:font-bold lg:text-base lg:p-2 lg:px-3 lg:rounded-2xl lg:bg-transparent
                 text-xl font-bold pb-1 pt-2
@@ -89,7 +89,7 @@ export const Header = () => {
             </li>
             <li className="lg:p-0 p-4 text-center lg:bg-transparent bg-slate-20 ">
               <Link to="/Registro" 
-                className="lg:font-bold lg:text-base lg:p-2 lg:px-3 lg:rounded-2xl lg:ml-1  
+                className="lg:font-bold lg:text-base lg:p-2 lg:px-3 lg:rounded-2xl lg:ml-1 lg:mr-6 
                 text-xl font-bold pb-1 pt-1.5
                 lg:hover:bg-sky-100 lg:text-sky-900 lg:bg-slate-100 lg:hover:text-sky-700
               text-indigo-900">

@@ -134,7 +134,7 @@ export function MantenimientoProveedores() {
         </div>
 
         <div className="lg:flex gap-4">
-          <div className="py-2 w-max min-w-max  h-min pt-12 p-6 mx-auto mt-6  mb-4 -ml-12 mr-4 bg-white rounded-lg shadow-lg">
+        <div className="basis-2/4 lg:w-96 w-5/12 py-2 h-min pt-12 p-6 mt-6  mb-4 lg:-ml-20 bg-white rounded-lg shadow-lg" >
             <h1 className="text-3xl font-bold text-gray-800 mb-6 -mt-2">Registrar Proveedor</h1>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
@@ -208,9 +208,9 @@ export function MantenimientoProveedores() {
             </form>
           </div>
           <div className="flex gap-6">
-        <div className="lg:basis-2/4 lg:w-full w-6/12 py-2 h-min pt-12 p-6 mx-auto mt-6 pb-12 lg:ml-0 -ml-12 lg:mb-0 mb-12 bg-white rounded-lg shadow-lg">
+          <div className="lg:max-h-[50rem] py-2 pt-12 p-6  mt-6 h-min mb-4 lg:ml-0 w-5/12 lg:w-full  bg-white rounded-lg shadow-lg">
           <h2 className="text-3xl font-bold text-gray-800 mb-6 -mt-2">Proveedores Registrados</h2>
-            <div className="overflow-x-scroll">
+            <div className="overflow-y-scroll">
           <table className="w-full bg-white shadow-md rounded-lg lg:ml-2 ml-1 lg:mr-2 mr-1">
           <thead className="bg-gray-100 text-gray-600 uppercase text-sm text-center rounded-xl">
               <tr>

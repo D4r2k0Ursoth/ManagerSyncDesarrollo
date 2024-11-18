@@ -15,6 +15,7 @@ export function Factura({ subtotal, totalIVA, totalVenta, carrito, selectedClien
   const [codigoUnico, setCodigoUnico] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [pdfBlob, setPdfBlob] = useState(null);
+  
 
   // Nueva lógica de pago
   const [empresa, setEmpresa] = useState({
@@ -27,10 +28,39 @@ export function Factura({ subtotal, totalIVA, totalVenta, carrito, selectedClien
   const [vuelto, setVuelto] = useState(0);
   const [numeroTarjeta, setNumeroTarjeta] = useState('');
   const [nombreTitular, setNombreTitular] = useState('');
-
+  const obtenerToken = async () => {
+    try {
+      // Realizar la solicitud POST
+      const response = await fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/obtenerToken', {
+        method: 'POST', // Establecer el método POST
+        headers: {
+          'Content-Type': 'application/json', // El tipo de contenido es JSON
+          // Puedes agregar otros encabezados si es necesario, como un token de autorización
+        },
+        body: JSON.stringify({
+          // Enviar los datos que tu API requiere para obtener el token (como credenciales)
+          username: 'tu-usuario',
+          password: 'tu-contraseña',
+        }),
+      });
+  
+      // Verificar si la respuesta fue exitosa
+      if (response.ok) {
+        const data = await response.json(); // Parsear la respuesta JSON
+        console.log('Token obtenido:', data.token); // Aquí puedes utilizar el token
+  
+        // Puedes almacenar el token en localStorage para usarlo en otras peticiones
+        localStorage.setItem('token', data.token);
+      } else {
+        console.error('Error al obtener el token:', response.statusText); // Manejar errores si la respuesta no es exitosa
+      }
+    } catch (error) {
+      console.error('Error de red o en la solicitud:', error); // Capturar cualquier error de red
+    }
+  };
   useEffect(() => {
     if (user?.empresa_id) {
-      fetch(`https://manaercynbdf-miccs.ondigitalocean.app/api/empresas/${user.empresa_id}`)
+      fetch(`https://manaercynbdf-miccs.ondigitalocean.app/api/empresas/${user.empresa_id}`) 
         .then(response => response.json())
         .then(data => {
           setEmpresa({
@@ -104,8 +134,10 @@ const calcularVuelto = (montoPagado) => {
   setVuelto(cambio >= 0 ? cambio : 0);
 };
 const detallesFactura = carrito.map((item) => ({
-  codigo_cabys: item.codigo_cabys,  // Código CABYS del producto
+  codigo_cabys: item.codigo_cabys,// Código CABYS del producto
+  codigo_producto: item.codigo_producto,
   cantidad: item.cantidad,          // Cantidad del producto
+  unidad_medida: item.unidad_medida,  
   descripcion: item.descripcion,    // Descripción del producto
   precio_unitario: item.precio_consumidor,
   total: item.cantidad * item.precio_consumidor, // Total por item
@@ -116,6 +148,8 @@ const detallesFactura = carrito.map((item) => ({
 
 
   const handleFacturar = async () => {
+
+    obtenerToken();
     if (!selectedCliente || !user || (metodoPago === 'efectivo' && cantidadPagada < totalVenta)) {
       alert("Por favor, completa todos los campos requeridos.");
       return;
@@ -135,8 +169,9 @@ const detallesFactura = carrito.map((item) => ({
       
     };
 
-    try {
-      const response = await fetch("https://manaercynbdf-miccs.ondigitalocean.app/api/facturas", {
+    try {  
+          const response = await fetch("https://manaercynbdf-miccs.ondigitalocean.app/api/facturas", {
+
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(facturaData),
@@ -158,7 +193,7 @@ const detallesFactura = carrito.map((item) => ({
       console.error("Error en la solicitud:", error);
     }
   };
- 
+
   const handleGuardarDetalle = async (facturaIdParam) => {
     const detalles = carrito.map((item) => {
       const cantidad = item.cantidad || 0;
@@ -178,6 +213,7 @@ const detallesFactura = carrito.map((item) => ({
         factura_id: facturaIdParam,
         producto_id: item.id,
         codigo_cabys: item.codigo_cabys,
+      
         cantidad: cantidad,
         precio_unitario: precioUnitario,
         total: cantidad * precioUnitario,
@@ -193,6 +229,7 @@ const detallesFactura = carrito.map((item) => ({
     for (const detalle of detalles) {
       try {
         const response = await fetch("https://manaercynbdf-miccs.ondigitalocean.app/api/detalles-factura", {
+
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(detalle),
@@ -285,7 +322,7 @@ const detallesFactura = carrito.map((item) => ({
           <label className='font-bold text-lg'>Total:</label>
           <input
             type="text"
-            className=" p-1 rounded w-32 text-right font-bold text-lg"
+            className=" p-1 rounded w-32 text-right font-bold text-lg cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-white"
             value={`₡${totalVenta.toFixed(2)}`}
             readOnly
           />

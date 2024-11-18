@@ -10,13 +10,12 @@ variants={fadeln("up",0.2)}
 initial= "hidden"
 whileInView={"show"}
 viewport={{once:false, amount:0.7}}
-className="flex lg:flex-row flex-col gap-32 h-screen text-center mt-24">
-    <div className="lg:basis-2/4 ml-24 bg-slate-50 bg-opacity-5 p-9 rounded-2xl h-min lg:block hidden">
-        <h1 className="text-white lg:text-6xl font-bold lg:mb-7 lg:mt-0 lg:pb-5 rounded-lg justify-center text-center text-4xl -mt-6 lg:block hidden">
+className="flex lg:flex-row md:flex-row flex-col gap-32 h-screen text-center mt-24">
+    <div className="lg:basis-2/4 ml-24 bg-slate-50 bg-opacity-5 p-9 rounded-2xl h-min lg:block md:hidden hidden">
+        <h1 className="text-white lg:text-6xl font-bold lg:mb-7 lg:mt-0 lg:pb-5 rounded-lg justify-center text-center text-4xl -mt-6 lg:block md:hidden hidden">
             Sobre nosotros
         </h1>
-        <p className=" text-white lg:mt-5 font-sans text-justify font-semibold lg:text-2xl leading-relaxed rounded-lg mt-6 text-xl text-balance lg:mx-0 lg:mb-0 mx-32 lg:block hidden">
-            Somos una empresa especializada en soluciones de facturación electrónica, 
+        <p className=" text-white lg:mt-5 font-sans text-justify font-semibold lg:text-2xl text-base leading-relaxed rounded-lg mt-6 text-balance lg:mx-0 lg:mb-0 mx-32 lg:block md:hidden hidden">            Somos una empresa especializada en soluciones de facturación electrónica, 
             comprometida con la innovación y la eficiencia en la gestión de documentos fiscales.
             Nuestro sistema facilita a las empresas la emisión, recepción y almacenamiento de facturas electrónicas de manera segura 
             y conforme a las normativas legales. Ofrecemos una plataforma intuitiva, diseñada para optimizar procesos contables, 

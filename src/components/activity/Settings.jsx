@@ -9,6 +9,7 @@ import { Sidebar } from '../Sidebar.jsx';
 
 import "../../index.css";
 
+
 export function Settings() {
   const { user, setUser, token, setToken } = useUser();
   const [profileImage, setProfileImage] = useState(null);
@@ -42,17 +43,17 @@ export function Settings() {
           <Sidebar logout={logout} />
         </div>
 
-          <div className="lg:basis-2/4 flex-grow lg:flex-none py-2 pt-12 p-6 mx-auto mt-6 -ml-14 mr-14 lg:mr-0 lg:ml-5 mb-4 h-min bg-white rounded-lg shadow-lg">
-            <h1 className="font-bold lg:text-5xl lg:p-10 p-5 text-4xl lg:mt-0 -mt-6 lg:text-left text-center">Hola, {user.nombre}</h1>
+        <div className="lg:basis-2/4 flex-grow lg:flex-none py-2 pt-12 p-6 mx-auto mt-6 mr-14 lg:mr-0 lg:ml-5 mb-4 h-min bg-white rounded-lg shadow-lg">
+        <h1 className="font-bold lg:text-5xl lg:p-10 p-5 text-4xl lg:mt-0 -mt-6 lg:text-left text-center">Hola, {user.nombre}</h1>
             <h2 className="font-semibold lg:indent-6 lg:text-2xl text-3xl lg:text-left text-center lg:ml-2 lg:p-2 lg:-mt-9 p-1">Rol: {user.role}</h2>
 
-            <div className="lg:grid lg:grid-cols-2 lg:p-10 lg:ml-0 ml-16 lg:mt-0 mt-4">
-              <div className="relative w-32 h-32 lg:ml-14 -ml-1 overflow-hidden bg-gray-100 rounded-full drop-shadow">
+            <div className="lg:grid lg:grid-cols-2 lg:p-10 lg:mt-0 mt-4 mx-12">
+              <div className="relative w-32 h-32 lg:ml-14  overflow-hidden bg-gray-100 rounded-full drop-shadow">
                 {user?.profile_image ? (
                   <img
                     src={user.profile_image}
                     alt="Profile"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover p-10"
                   />
                 ) : (
                   <svg
@@ -70,12 +71,12 @@ export function Settings() {
                 )}
               </div>
 
-              <div className="grid grid-cols-2 lg:gap-2 gap-4 py-4 lg:py-2 lg:ml-0 -ml-16">
+              <div className="grid grid-cols-2 lg:gap-2 gap-6 py-4 lg:py-2">
                 <div className="flex lg:flex-col lg:justify-end ">
                   <button
                     onClick={() => setEditMode(!editMode)}
-                    className="w-36 lg:py-2.5 py-0.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 
-                    hover:bg-gray-100 hover:text-indigo-700">
+                    className="w-36 lg:py-2.5 py-0.5 px-5 font-medium -ml-10 text-sm font-mediumfocus:outline-none rounded-full border 
+                    bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800">
                     {editMode ? 'Cancelar' : 'Editar perfil'}
                   </button>
                 </div>
@@ -83,8 +84,8 @@ export function Settings() {
                 <div className="flex lg:flex-col lg:justify-end">
                   <button
                     onClick={() => setShowConfirmDelete(true)}
-                    className="w-36 lg:py-2.5 py-0.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 
-                    hover:bg-gray-100 hover:text-indigo-700">
+                    className="w-36 lg:py-2.5 lg:px-5 py-0.5 px-7 text-sm font-medium rounded-full border 
+                    bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800">
                     Eliminar cuenta
                   </button>
                 </div>
@@ -103,7 +104,7 @@ export function Settings() {
                       name="nombre"
                       value={formData.nombre}
                       onChange={handleChange}
-                      className="w-full p-2 border border-gray-300 rounded focus"
+                      className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-sky-700"
                       required
                     />
                   </div>
@@ -114,7 +115,7 @@ export function Settings() {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full p-2 border border-gray-300 rounded"
+                      className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-sky-700"
                       required
                     />
                   </div>
@@ -125,7 +126,7 @@ export function Settings() {
                       name="cedula"
                       value={formData.cedula}
                       onChange={handleChange}
-                      className="w-full p-2 border border-gray-300 rounded "
+                      className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-sky-700"
                       required
                     />
                   </div>
@@ -136,7 +137,7 @@ export function Settings() {
                       name="current_password"
                       value={formData.current_password}
                       onChange={handleChange}
-                      className="w-full p-2 border border-gray-300 rounded"
+                      className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-sky-700"
                     />
                   </div>
                   <div className='mb-6 lg:mb-0'>
@@ -146,7 +147,7 @@ export function Settings() {
                       name="password"
                       value={formData.password}
                       onChange={handleChange}
-                      className="w-full p-2 border border-gray-300 rounded"
+                      className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-sky-700"
                     />
                   </div>
                   <div className='mb-6 lg:mb-0'>
@@ -156,7 +157,7 @@ export function Settings() {
                       name="password_confirmation"
                       value={formData.password_confirmation}
                       onChange={handleChange}
-                      className="w-full p-2 border border-gray-300 rounded"
+                      className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-sky-700"
                     />
                   </div>
                 
@@ -180,7 +181,7 @@ export function Settings() {
                 <div className="flex lg:justify-end justify-center mt-4">
                   <button
                     type="submit"
-                    className="lg:py-2 lg:px-4 w-15 lg:w-full  px-5 py-3 text-white bg-sky-900 rounded-full hover:bg-indigo-900">
+                    className="lg:py-2 lg:px-4 w-full  py-2 text-white bg-sky-900 rounded-full hover:bg-indigo-900">
                       Guardar cambios
                   </button>
                 </div>
