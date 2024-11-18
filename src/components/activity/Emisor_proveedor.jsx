@@ -28,21 +28,38 @@ export function Emisor({ onChange }) {
           'https://services.arcgis.com/LjCtRQt1uf8M6LGR/arcgis/rest/services/Distritos_CR/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json'
         );
         const data = await response.json();
+  
+        // Formatear los datos, eliminando duplicados
         const dataFormatted = data.features.reduce((acc, item) => {
           const { NOM_PROV, NOM_CANT, NOM_DIST } = item.attributes;
+  
+          // Verificar si ya existe la provincia
           if (!acc[NOM_PROV]) acc[NOM_PROV] = {};
-          if (!acc[NOM_PROV][NOM_CANT]) acc[NOM_PROV][NOM_CANT] = [];
-          acc[NOM_PROV][NOM_CANT].push(NOM_DIST);
+  
+          // Verificar si ya existe el cantón
+          if (!acc[NOM_PROV][NOM_CANT]) acc[NOM_PROV][NOM_CANT] = new Set();
+  
+          // Añadir el distrito, usando Set para evitar duplicados
+          acc[NOM_PROV][NOM_CANT].add(NOM_DIST);
+  
           return acc;
         }, {});
-
+  
+        // Convertir Set a array para facilidad de uso
+        Object.keys(dataFormatted).forEach((provincia) => {
+          Object.keys(dataFormatted[provincia]).forEach((canton) => {
+            dataFormatted[provincia][canton] = Array.from(dataFormatted[provincia][canton]);
+          });
+        });
+  
+        // Configurar los estados con las provincias y los datos de cantones/distritos
         setProvincias(Object.keys(dataFormatted));
         setCantonesData(dataFormatted);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-
+  
     fetchProvinciasCantonesDistritos();
   }, []);
 
