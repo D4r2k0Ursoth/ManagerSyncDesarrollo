@@ -8,6 +8,7 @@ import { Footer } from '../Footer.jsx';
 import { Sidebar } from '../Sidebar.jsx';
 
 import "../../index.css";
+import Cloudinary from './Cloudinary.jsx';
 
 export function Settings() {
   const { user, setUser, token, setToken } = useUser();
@@ -211,6 +212,7 @@ export function Settings() {
       </div>
       <div className="h-min">
         <Footer />
+        <Cloudinary />
       </div>
     </>
   );
