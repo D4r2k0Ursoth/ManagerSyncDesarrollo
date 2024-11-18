@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
+import { Loading } from './Loading.jsx';
+import { Header } from '../Header.jsx';
+import { Footer } from '../Footer.jsx';
 export function MantenimientoEmpresas() {
 
     
@@ -255,23 +258,24 @@ const [empresaData, setEmpresaData] = useState({});
 };
 
 
-  if (loading) return <p>Cargando empresas...</p>;
+if (loading) return <div className='duration-700'> <Loading/></div>;
 
   return (
     <>
-      <div className="bg-slate-300 w-screen flex h-max gap-0">
+    <Header/>
+    <div className="bg-slate-300  w-screen flex h-max gap-0">
         <div className="basis-1/4 m-4 h-full"></div>
 
-        <div className="flex gap-6">
-          <div className="basis-2/4 w-96 py-2 h-min pt-12 p-6 mx-auto mt-6 mb-4 -ml-20 bg-white rounded-lg shadow-lg">
-            <h1 className="text-3xl font-bold text-gray-800 mb-6 -mt-4">Registrar empresas</h1>
+        <div className="lg:flex gap-7">
+        <div className="basis-2/4 lg:w-96 w-10/12 py-2 h-min pt-12 p-6 mt-6  mb-4 lg:-ml-20 bg-white rounded-lg shadow-lg" >
+        <h1 className="text-3xl font-bold text-gray-800 mb-6 -mt-2">Registrar Empresas</h1>
 
             <form onSubmit={editingEmpresa ? handleUpdate : handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-gray-700 font-semibold text-base">Nombre</label>
                 <input
                   type="text"
-                  className="w-full mt-1 p-2 border border-gray-300 rounded-md mb-0.5"
+                  className="w-full mt-1 p-2 border border-gray-300 rounded-md mb-0.5 focus:outline-none focus:ring-2 focus:ring-sky-700"
                   value={nombre}
                   onChange={(e) => setNombre(e.target.value)}
                   required
@@ -282,7 +286,7 @@ const [empresaData, setEmpresaData] = useState({});
                 <label className="block text-gray-700 font-semibold">Teléfono</label>
                 <input
                   type="text"
-                  className="w-full mt-1 p-2 border border-gray-300 rounded-md mb-0.5"
+                  className="w-full mt-1 p-2 border border-gray-300 rounded-md mb-0.5 focus:outline-none focus:ring-2 focus:ring-sky-700"
                   value={telefono}
                   onChange={(e) => setTelefono(e.target.value)}
                   required
@@ -293,7 +297,7 @@ const [empresaData, setEmpresaData] = useState({});
                 <label className="block text-gray-700 font-semibold">Email</label>
                 <input
                   type="email"
-                  className="w-full mt-1 p-2 border border-gray-300 rounded-md mb-0.5"
+                  className="w-full mt-1 p-2 border border-gray-300 rounded-md mb-0.5 focus:outline-none focus:ring-2 focus:ring-sky-700"
                   value={correo}
                   onChange={(e) => setCorreo(e.target.value)}
                   required
@@ -303,7 +307,7 @@ const [empresaData, setEmpresaData] = useState({});
               <div>
                 <label className="block text-gray-700 font-semibold">Tipo de empresa</label>
                 <select
-                  className="w-full mt-1 p-2 border border-gray-300 rounded-md mb-0.5"
+                  className="w-full mt-1 p-2 border border-gray-300 rounded-md mb-0.5 focus:outline-none focus:ring-2 focus:ring-sky-700"
                   value={empresa}
                   onChange={(e) => setEmpresa(e.target.value)}
                 >
@@ -317,7 +321,7 @@ const [empresaData, setEmpresaData] = useState({});
                 <label className="block text-gray-700 font-semibold">Cédula de empresa</label>
                 <input
                   type="text"
-                  className={`w-full mt-1 p-2 border border-gray-300 rounded-md mb-0.5
+                  className={`w-full mt-1 p-2 border border-gray-300 rounded-md mb-0.5 focus:outline-none focus:ring-2 focus:ring-sky-700
                     ${cedulaEmpresaStatus === 'inscrito' ? 'border-cyan-600' : cedulaEmpresaStatus === 'no inscrito' ? 'border-pink-700' : ''
                   }`}
                   value={cedula_empresa}
@@ -340,7 +344,7 @@ const [empresaData, setEmpresaData] = useState({});
                 <label className="block text-gray-700 font-semibold">Código de actividad</label>
                 <input
                   type="text"
-                  className="w-full mt-1 p-2 border border-gray-300 rounded-md mb-0.5"
+                  className="w-full mt-1 p-2 border border-gray-300 rounded-md mb-0.5 focus:outline-none focus:ring-2 focus:ring-sky-700"
                   value={codigo_actividad}
                   onChange={(e) => setCodigo_actividad(e.target.value)}
                   required
@@ -350,10 +354,9 @@ const [empresaData, setEmpresaData] = useState({});
               <div>
                 <label className="block text-gray-700 font-semibold">Provincia</label>
                 <select
-            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+            className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-700"
             value={provincia}
-            onChange={(e) => setProvincia(e.target.value)}
-          >
+            onChange={(e) => setProvincia(e.target.value)}>
             <option value="">Seleccione una provincia</option>
             {provincias.map(([code, name]) => (
               <option key={code} value={code}>
@@ -366,7 +369,7 @@ const [empresaData, setEmpresaData] = useState({});
               <div>
                 <label className="block text-gray-700 font-semibold">Cantón</label>
                 <select
-            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+            className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-700"
             value={canton}
             onChange={(e) => setCanton(e.target.value)}
             disabled={!provincia}
@@ -383,7 +386,7 @@ const [empresaData, setEmpresaData] = useState({});
               <div>
                 <label className="block text-gray-700 font-semibold">Distrito</label>
                 <select
-            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+            className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-700"
             value={distrito}
             onChange={(e) => setDistrito(e.target.value)}
             disabled={!canton}
@@ -400,7 +403,7 @@ const [empresaData, setEmpresaData] = useState({});
               <div>
                 <label className="block text-gray-700 font-semibold">Descripción</label>
                 <textarea
-                  className="w-full mt-1 p-2 border border-gray-300 rounded-md mb-0.5"
+                  className="w-full mt-1 p-2 border border-gray-300 rounded-md mb-0.5 focus:outline-none focus:ring-2 focus:ring-sky-700"
                   value={descripcion}
                   onChange={(e) => setDescripcion(e.target.value)}
                 />
@@ -409,7 +412,7 @@ const [empresaData, setEmpresaData] = useState({});
               <div>
                 <label className="block text-gray-700 font-semibold">Otras señas</label>
                 <textarea
-                  className="w-full mt-1 p-2 border border-gray-300 rounded-md mb-0.5"
+                  className="w-full mt-1 p-2 border border-gray-300 rounded-md mb-0.5 focus:outline-none focus:ring-2 focus:ring-sky-700"
                   value={otrasSenas}
                   onChange={(e) => setOtrasSenas(e.target.value)}
                 />
@@ -419,26 +422,25 @@ const [empresaData, setEmpresaData] = useState({});
 
               <button
                 type="submit"
-                className="w-full text-sm px-5 py-2.5 text-center font-medium text-white bg-sky-900 rounded-xl hover:bg-indigo-900 focus:ring-4 focus:outline-none focus:ring-blue-200"
-              >
+                className="w-full text-sm px-5 py-2.5 text-center font-medium text-white bg-sky-900 rounded-xl hover:bg-indigo-900 focus:ring-4 focus:outline-none focus:ring-blue-200">
                 {editingEmpresa ? 'Actualizar empresa' : 'Registrar empresa'}
               </button>
 
               <button
               type="button"
               onClick={() => navigate("/Registro")}
-              className="mt-4 w-full text-sm px-5 py-2.5 text-center font-medium text-white bg-red-500 rounded-xl hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-blue-200"
-            >
+              className="px-5 my-4 py-2.5 w-full text-sm text-center font-medium rounded-xl bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800">
               Volver a registro
             </button>
             </form>
           </div>
 
-          <div className="basis-2/4 w-96 py-2 h-min pt-12 p-6 mx-auto mt-6 mb-4 -ml-20 bg-white rounded-lg shadow-lg">
+          <div className="lg:basis-2/4 lg:max-h-[50rem] py-2 pt-12 p-6  mt-6 h-min mb-4 lg:ml-0 w-10/12 lg:w-full  bg-white rounded-lg shadow-lg">
             <h1 className="text-3xl font-bold text-gray-800 mb-6 -mt-4">Empresas registradas</h1>
-            <table className="min-w-full border border-gray-300">
-              <thead>
-                <tr>
+            <div className="overflow-y-scroll">
+            <table className="w-full bg-white shadow-md rounded-lg lg:ml-0 ml-1 lg:mr-2 mr-1 mb-3">
+            <thead className="bg-gray-100 text-gray-600 uppercase text-sm text-center rounded-xl">
+            <tr>
                   <th className="border border-gray-300 px-4 py-2">Nombre</th>
                   <th className="border border-gray-300 px-4 py-2">Cédula</th>
                   <th className="border border-gray-300 px-4 py-2">Acciones</th>
@@ -451,25 +453,24 @@ const [empresaData, setEmpresaData] = useState({});
                     <td className="border border-gray-300 px-4 py-2">{empresa.cedula_empresa}</td>
                     <td className="border border-gray-300 px-4 py-2">
                       <button
-                        className="text-blue-600 hover:text-blue-800"
-                        onClick={() => handleEdit(empresa)}
-                      >
+                        className="px-5 my-1 py-1 w-full text-sm text-center font-medium rounded-xl bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800"
+                        onClick={() => handleEdit(empresa)}>
                         Editar
                       </button>
                       <button
-                        className="text-red-600 hover:text-red-800 ml-4"
-                        onClick={() => handleDelete(empresa.id)}
-                      >
+                        className="px-5 mt-1 py-1 w-full text-sm text-center font-medium rounded-xl bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800"
+                        onClick={() => handleDelete(empresa.id)}>
                         Eliminar
                       </button>
                     </td>
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </table></div>
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

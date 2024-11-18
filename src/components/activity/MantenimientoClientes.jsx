@@ -117,7 +117,7 @@ export function MantenimientoClientes() {
   return (
     <>
       <Header/>
-      <div className="bg-slate-300  w-screen flex h-max  gap-0 overflow-x-hidden">
+      <div className="bg-slate-300  w-screen flex h-max overflow-x-hidden">
 
         <div className="basis-1/4 mr-4 h-full">
           <Sidebar logout={logout}/>
@@ -125,8 +125,8 @@ export function MantenimientoClientes() {
 
         <div className="lg:flex gap-6">
             {/* Contenido principal */}
-        <div className="basis-2/4 lg:w-96 w-3/6 py-2 h-min pt-12 p-6 mx-auto mt-6  mb-4 lg:-ml-20 -ml-12 bg-white rounded-lg shadow-lg" >
-          <h1 className="text-3xl font-bold text-gray-800 mb-6 -mt-4">Registrar clientes</h1>
+            <div className="basis-2/4 lg:w-96 w-5/12 py-2 h-min pt-12 p-6 mt-6  mb-4 lg:-ml-20 bg-white rounded-lg shadow-lg" >
+            <h1 className="text-3xl font-bold text-gray-800 mb-6 -mt-4">Registrar clientes</h1>
             <div className="">
               <form onSubmit={editingCliente ? handleUpdate : handleSubmit} className="space-y-4">
                 <div>
@@ -202,7 +202,7 @@ export function MantenimientoClientes() {
               </form>
             </div>
           </div>
-          <div className="lg:basis-2/4 py-2 pt-12 p-6 mx-auto mt-6 h-min mb-4 lg:ml-0 -ml-12 w-3/6 lg:w-full  bg-white rounded-lg shadow-lg">
+          <div className="lg:basis-2/4 lg:max-h-[50rem] py-2 pt-12 p-6  mt-6 h-min mb-4 lg:ml-0 w-5/12 lg:w-full  bg-white rounded-lg shadow-lg">
             <h2 className="text-3xl font-bold text-gray-800 mb-6 -mt-4">Clientes Registrados</h2>
             <div className="overflow-x-scroll">
           <table className="lg:basis-2/4 py-2 pt-12 p-6 mx-auto mt-6 lg:ml-0 ml-1 lg:mr-0 mr-1 mb-4 bg-white rounded-lg shadow-lg overflow-x-scroll lg:w-full w-3/6">
@@ -228,13 +228,13 @@ export function MantenimientoClientes() {
 
                     <button
                       onClick={() => handleEdit(cliente)}
-                      className="text-sm text-center font-medium mt-1 px-6 py-1 rounded-xl bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200" >
+                      className="text-sm text-center font-medium mt-1 px-6 py-1 rounded-xl w-full bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200" >
                       Editar
                     </button>
 
                     <button
                       onClick={() => handleDelete(cliente.id)}
-                      className="text-sm font-medium mt-2 px-4 py-1 rounded-xl bg-gray-100 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200">
+                      className="text-sm font-medium mt-2 px-4 py-1 rounded-xl w-full bg-gray-100 text-gray-600 hover:bg-slate-200 hover:text-sky-800 transition duration-200">
                       Eliminar
                     </button>
                   </td>

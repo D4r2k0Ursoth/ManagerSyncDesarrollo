@@ -60,9 +60,7 @@ export function Factura({ subtotal, totalIVA, totalVenta, carrito, selectedClien
   };
   useEffect(() => {
     if (user?.empresa_id) {
-      fetch(`https://manaercynbdf-miccs.ondigitalocean.app/api/empresas/${user.empresa_id}`)
-
-     
+      fetch(`https://manaercynbdf-miccs.ondigitalocean.app/api/empresas/${user.empresa_id}`) 
         .then(response => response.json())
         .then(data => {
           setEmpresa({
@@ -195,7 +193,7 @@ const detallesFactura = carrito.map((item) => ({
       console.error("Error en la solicitud:", error);
     }
   };
- 
+
   const handleGuardarDetalle = async (facturaIdParam) => {
     const detalles = carrito.map((item) => {
       const cantidad = item.cantidad || 0;
@@ -324,7 +322,7 @@ const detallesFactura = carrito.map((item) => ({
           <label className='font-bold text-lg'>Total:</label>
           <input
             type="text"
-            className=" p-1 rounded w-32 text-right font-bold text-lg"
+            className=" p-1 rounded w-32 text-right font-bold text-lg cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-white"
             value={`₡${totalVenta.toFixed(2)}`}
             readOnly
           />

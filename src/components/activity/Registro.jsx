@@ -14,7 +14,6 @@ export function Register() {
     cedula: '',
     
     role: 'admin',
-   
     password: '',
     password_confirmation: '',
     image: null,
@@ -25,7 +24,6 @@ export function Register() {
   const [success, setSuccess] = useState('');
   const [cedulaEmpresaStatus, setCedulaEmpresaStatus] = useState(null);
   const [isValidatingCedula, setIsValidatingCedula] = useState(false);
- 
   const [empresas, setEmpresas] = useState([]); // Estado para las empresas
     
 const navigate = useNavigate();
@@ -114,14 +112,29 @@ const navigate = useNavigate();
             {errors.cedula && <p className="text-pink-700">{errors.cedula[0]}</p>}
             {errors.password_confirmation && <p className="text-pink-700">{errors.password_confirmation}</p>}
 
+
+
+            <label
+                htmlFor="empresa"
+                className="block mt-4 text-sm font-medium text-pink-700">
+                Debe registrar una empresa antes de registrar un usuario
+              </label>
+            <button
+              type="button"
+              onClick={() => navigate("/MantenimientoEmpresas")}
+              className="mt-4 w-full text-sm px-5 mb-4 py-2.5 text-center font-medium text-white bg-sky-900 rounded-xl hover:bg-indigo-900 focus:ring-4 focus:outline-none focus:ring-blue-200">
+              Ir a modulo de Empresas
+            </button>
+            
             <div className="mb-2">
-              <label htmlFor="nombre" className="block mb-2 ml-0.5 text-sm font-medium text-gray-900">
+              <label htmlFor="nombre" 
+              className="block mb-2 ml-0.5 text-sm font-medium text-gray-900">
                 Nombre de usuario
               </label>
               <input
                 type="text"
                 id="nombre"
-                className="shadow-sm mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5"
+                className="shadow-sm mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-700 block w-full p-2.5"
                 placeholder="Nombre"
                 value={formData.nombre}
                 onChange={handleChange}
@@ -130,14 +143,14 @@ const navigate = useNavigate();
             </div>
 
             <div className="mb-2">
-              <label htmlFor="email" className="block mb-2 ml-0.5 text-sm font-medium text-gray-900 dark:text-white">
+              <label htmlFor="email" className="block mb-2 ml-0.5 text-sm font-medium text-gray-900">
                 Correo electrónico
               </label>
               <input
                 type="email"
                 id="email"
-                className="shadow-sm mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5"
-                placeholder="nombre@email.com"
+                className="shadow-sm mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-700 block w-full p-2.5"
+                placeholder="Nombre@email.com"
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -145,46 +158,29 @@ const navigate = useNavigate();
             </div>
 
             <div className="mb-2">
-              <label htmlFor="cedula" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label htmlFor="cedula" className="block mb-2 text-sm font-medium text-gray-900">
                 Cédula de identidad
               </label>
               <input
                 type="text"
                 id="cedula"
-                className="shadow-sm mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5"
+                className="shadow-sm mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-700 block w-full p-2.5"
                 placeholder="Cédula"
                 value={formData.cedula}
                 onChange={handleChange}
                 required
               />
             </div>
-
-
-          <label
-                htmlFor="empresa"
-                className="block mt-4 text-sm font-medium text-red-900"
-              >
-                Debe registrar una empresa para registrar usuario
-              </label>
-            <button
-              type="button"
-              onClick={() => navigate("/MantenimientoEmpresas")}
-              className="mt-4 w-full text-sm px-5 mb-4 py-2.5 text-center font-medium text-white bg-sky-900 rounded-xl hover:bg-indigo-900 focus:ring-4 focus:outline-none focus:ring-blue-200"
-            >
-              Ir a modulo de Empresas
-            </button>
-
-<div className="mb-2">
+            <div className="mb-2">
               <label htmlFor="empresa_id" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Seleccionar Empresa
               </label>
               <select
                 id="empresa_id"
-                className="shadow-sm mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5"
+                className="shadow-sm mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-700 block w-full p-2.5"
                 value={formData.empresa_id}
                 onChange={handleChange}
-                required
-              >
+                required>
                 <option value="">Seleccione una empresa</option>
                 {empresas.map(empresa => (
                   <option key={empresa.id} value={empresa.id}>
@@ -192,29 +188,15 @@ const navigate = useNavigate();
                   </option>
                 ))}
               </select>
-
-
-
-
-
-    
             </div>
-
-
-
-
-
-
-            
-
             <div className="mb-2">
-              <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">
                 Contraseña
               </label>
               <input
                 type="password"
                 id="password"
-                className="shadow-sm mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5"
+                className="shadow-sm mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-700 block w-full p-2.5"
                 placeholder="Contraseña"
                 value={formData.password}
                 onChange={handleChange}
@@ -223,13 +205,13 @@ const navigate = useNavigate();
             </div>
 
             <div className="mb-2">
-              <label htmlFor="password_confirmation" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label htmlFor="password_confirmation" className="block mb-2 text-sm font-medium text-gray-900">
                 Confirmar contraseña
               </label>
               <input
                 type="password"
                 id="password_confirmation"
-                className="shadow-sm mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5"
+                className="shadow-sm mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-700 block w-full p-2.5"
                 placeholder="Confirmar contraseña"
                 value={formData.password_confirmation}
                 onChange={handleChange}
@@ -238,7 +220,7 @@ const navigate = useNavigate();
             </div>
 
             <div className="mb-2">
-              <label htmlFor="image" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label htmlFor="image" className="block mb-2 text-sm font-medium text-gray-900">
                 Imagen de perfil
               </label>
               <input

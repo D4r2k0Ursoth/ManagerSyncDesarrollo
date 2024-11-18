@@ -115,7 +115,7 @@ export function Punto_venta() {
               {/* Botón para reiniciar la venta */}
               <button
                 onClick={handleReiniciarVenta}
-                className="lg:-mt-4 mt-3 ml-3 lg:mr-0 mr-4 lg:px-3 py-2 text-white bg-sky-900 rounded-xl hover:bg-indigo-900 lg:w-full w-11/12">
+                className="lg:-mt-4 mt-3 ml-3 lg:mr-0 mr-4 lg:px-3 py-2 font-medium text-white bg-sky-900 rounded-xl hover:bg-indigo-900 lg:w-full w-11/12">
                 Nueva Venta
               </button>
             </div>
@@ -173,7 +173,7 @@ export function Punto_venta() {
               </li>
             </ul>
 
-            <div className="grid grid-cols-6 p-2 gap-1">
+            <div className="grid grid-cols-6 p-2 gap-2">
               <div className="col-span-1">
                 <input
                   type="number"
@@ -185,10 +185,9 @@ export function Punto_venta() {
               </div>
               <div className="col-span-2">
                 <select
-                  className="w-full p-2 border rounded mb-4 lg:ml-0 -ml-1"
+                  className="w-full p-2 border rounded mb-4 lg:ml-0 -ml-1 focus:outline-none focus:ring-2 focus:ring-sky-700"
                   onChange={(e) => setSelectedProducto(JSON.parse(e.target.value))}
-                  value={selectedProducto ? JSON.stringify(selectedProducto) : ""}
-                >
+                  value={selectedProducto ? JSON.stringify(selectedProducto) : ""}>
                   <option value="">Seleccionar producto...</option>
                   {productos.map((producto) => (
                     <option key={producto.id} value={JSON.stringify(producto)}>
@@ -209,7 +208,7 @@ export function Punto_venta() {
               <div className="col-span-1">
                 <button
                   onClick={handleAgregarProducto}
-                  className="lg:px-4 px-2 py-2 lg:ml-0 ml-7 text-white bg-sky-900 rounded-xl hover:bg-indigo-900">
+                  className="lg:px-4 px-2 py-2 lg:ml-0 ml-7 font-medium text-white bg-sky-900 rounded-xl hover:bg-indigo-900">
                   Agregar
                 </button>
               </div>
@@ -245,7 +244,7 @@ export function Punto_venta() {
           </div>
         
 
-        <div className="lg:pt-2 lg:pr-12 lg:ml-4 mr-5">
+        <div className="lg:pt-2 lg:-mt-4 lg:pr-12 lg:ml-4 mr-5">
           <Detalle_facturas 
             subtotal={subtotal}
             totalIVA={totalIVA}

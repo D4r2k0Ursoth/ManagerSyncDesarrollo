@@ -29,8 +29,8 @@ export function Sidebar({ logout }) {
 
     return (
         <div className="flex min-h-dvh max-h-fit w-full h-fit ">
-            <div className={`flex-h-grow h-fit ${open ? "lg:w-72  lg:pb-72 w-screen bg-slate-50 pb-[50rem]" : "lg:w-28 w-16 lg:bg-slate-50 lg:pb-[50rem]"}  transition-width lg:bg-slate-50  lg:p-5 lg:pt-10 relative ease-in-out duration-300 lg:duration-150 `}>
-            <img
+    <div className={`flex-h-grow h-fit ${open ? "lg:w-72  lg:pb-72 md:w-72  md:pb-72 w-screen bg-slate-50 pb-[50rem] lg:mr-0 mr-60" : "lg:w-28 w-16 lg:bg-slate-50 lg:pb-[50rem] lg:mr-20 -mr-5"}  
+        transition-width lg:bg-slate-50  lg:p-5 lg:pt-10 relative ease-in-out duration-300 lg:duration-150 `}>            <img
                     src={controlImage}
                     className={`absolute cursor-pointer -right-2 lg:-right-5 top-9  border-slate-100 border-5 rounded-full 
                         ${!open && "rotate-180"} 

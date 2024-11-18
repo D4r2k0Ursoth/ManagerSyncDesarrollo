@@ -63,7 +63,7 @@ export function Login() {
               <input
                 type="email"
                 id="email"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-600 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-600 dark:focus:border-blue-500"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-700 block w-full p-2.5"
                 placeholder="name@email.com"
                 value={formData.email}
                 onChange={handleChange}
@@ -71,14 +71,14 @@ export function Login() {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">
                 Contraseña
               </label>
               
               <input
                 type="password"
                 id="password"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-600 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-600 dark:focus:border-blue-500"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-700 block w-full p-2.5"
                 value={formData.password}
                 onChange={handleChange}
                 required
@@ -86,7 +86,7 @@ export function Login() {
             </div>
             {errors.server && <p className="text-pink-700 mb-5 font-semibold text-sm">{errors.server}</p>}
             <div className="flex items-start mb-4 text-center">
-              <Link to="/forgotpassword" className="text-sm ml-6 italic text-blue-500 hover:underline "> {/* Cambié a Link */}
+              <Link to="/forgotpassword" className="text-sm ml-6 italic text-sky-900 hover:underline "> {/* Cambié a Link */}
                 ¿Olvidaste tu contraseña?
               </Link>
             </div>

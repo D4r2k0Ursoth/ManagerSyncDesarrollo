@@ -31,13 +31,12 @@ export function CabysModal({ isOpen, onClose, onCabysSelect }) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-3/4 max-h-full overflow-auto">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-3/4 h-[36rem] max-h-screen overflow-auto mt-12">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold">Seleccionar Producto CABYS</h2>
+          <h2 className="text-2xl font-bold">Seleccionar CABYS de producto </h2>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 font-bold text-xl"
-          >
+            className="text-gray-500 hover:text-gray-700 font-bold text-xl">
             &times;
           </button>
         </div>
@@ -45,24 +44,22 @@ export function CabysModal({ isOpen, onClose, onCabysSelect }) {
           <input
             type="text"
             placeholder="Buscar productos"
-            className="flex-1 p-3 border border-gray-300 rounded-l-md focus:ring-2 focus:ring-cyan-600"
+            className="flex-1 p-3 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-sky-700"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
+            onChange={(e) => setSearchTerm(e.target.value)}/>
           <button
             onClick={fetchApiData}
-            className="px-4 py-2 bg-sky-600 text-white rounded-r-md hover:bg-sky-800"
-          >
+            className="px-4 py-2 rounded-r-md border font-medium border-gray-300 text-white bg-sky-900  hover:bg-indigo-900 focus:ring-4 focus:outline-none focus:ring-blue-200" >
             Buscar
           </button>
         </div>
         {loading && <div className="text-center">Cargando...</div>}
-        {error && <div className="text-center text-red-500">{error}</div>}
+        {error && <div className="text-center text-pink-700">{error}</div>}
         {!loading && apiData.length > 0 && (
-          <div className="overflow-auto">
+          <div className="overflow-y-scroll">
             <table className="w-full table-auto border-collapse border border-gray-300">
-              <thead>
-                <tr className="bg-gray-100">
+            <thead className="bg-gray-100 text-gray-600 uppercase text-sm text-center rounded-xl">
+            <tr className="bg-gray-100">
                   <th className="border border-gray-300 px-4 py-2 text-left">Código CABYS</th>
                   <th className="border border-gray-300 px-4 py-2 text-left">Descripción</th>
                   <th className="border border-gray-300 px-4 py-2 text-left">Categorías</th>
@@ -89,8 +86,7 @@ export function CabysModal({ isOpen, onClose, onCabysSelect }) {
                             impuesto: item.impuesto || 0,
                           })
                         }
-                        className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-800"
-                      >
+                        className="px-4 py-2 rounded-xl font-medium bg-gray-50 text-gray-600 hover:bg-slate-200 hover:text-sky-800">
                         Seleccionar
                       </button>
                     </td>

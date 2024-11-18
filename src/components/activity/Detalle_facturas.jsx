@@ -33,7 +33,7 @@ export function Detalle_facturas({ subtotal, totalIVA, totalVenta, carrito, sele
 
           <div className="flex justify-between mb-4">
             <span className="text-base font-medium mr-24 text-gray-600">Cliente:</span>
-            <span className="text-lg text-gray-800">{selectedCliente ? selectedCliente.nombre : 'Ninguno'}</span>
+            <span className="text-medium font-medium text-gray-800">{selectedCliente ? selectedCliente.nombre : 'Ninguno'}</span>
           </div>
           <div className="space-y-4">
             <div className="flex justify-between">
