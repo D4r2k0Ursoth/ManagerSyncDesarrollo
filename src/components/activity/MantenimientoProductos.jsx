@@ -6,6 +6,7 @@ import { CabysModal } from './CabysModal.jsx';
 import { useUser } from '../hooks/UserContext';
 import { useAccountManagement } from '../hooks/useAccountManagement';
 import { Loading } from './Loading.jsx';
+import Cloudinary from './Cloudinary.jsx'
 
 export function MantenimientoProductos() {
   const { user } = useUser();
@@ -404,6 +405,7 @@ export function MantenimientoProductos() {
         onCabysSelect={handleSelectCabys}
       />
       <Footer />
+      <Cloudinary />
     </>
   );
 }

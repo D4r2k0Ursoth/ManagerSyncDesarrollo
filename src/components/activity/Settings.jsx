@@ -9,6 +9,7 @@ import { Sidebar } from '../Sidebar.jsx';
 
 import "../../index.css";
 
+
 export function Settings() {
   const { user, setUser, token, setToken } = useUser();
   const [profileImage, setProfileImage] = useState(null);
