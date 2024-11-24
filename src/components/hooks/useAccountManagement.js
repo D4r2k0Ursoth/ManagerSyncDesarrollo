@@ -5,6 +5,7 @@ export const useAccountManagement = () => {
   const navigate = useNavigate();
   const { setUser, setToken } = useUser(); // Extraer setUser y setToken directamente del contexto
 
+  // Función para eliminar la cuenta
   const deleteAccount = async (token) => {
     try {
       const response = await fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/delete-account', {
@@ -19,16 +20,20 @@ export const useAccountManagement = () => {
         throw new Error('Error al eliminar la cuenta');
       }
 
+      // Eliminar los datos del usuario
       setUser(null);
       setToken('');
       localStorage.removeItem('token');
       localStorage.removeItem('user');
+
+      // Redirigir al login
       navigate('/login');
     } catch (err) {
       console.error(err.message);
     }
   };
 
+  // Función para cerrar sesión
   const logout = () => {
     setUser(null);
     setToken('');
