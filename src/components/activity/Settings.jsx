@@ -35,8 +35,8 @@ export function Settings() {
 
   // Construcción de la URL completa de la imagen de perfil
   const profileImageUrl = user?.profile_image
-    ? `${cloudinaryBaseUrl}${user.profile_image}`
-    : null;
+  ? `${cloudinaryBaseUrl}${user.profile_image}.png`  // Asegúrate de agregar la extensión si es necesario
+  : null;
 
   return (
     <>
