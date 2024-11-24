@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import "../../index.css";
 import { Header } from '../Header.jsx';
 import { Footer } from '../Footer.jsx';
-import { MantenimientoEmpresas } from './MantenimientoEmpresas.jsx';
 
 export function Register() {
   const [formData, setFormData] = useState({
@@ -19,8 +18,6 @@ export function Register() {
 
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState('');
-  const [cedulaEmpresaStatus, setCedulaEmpresaStatus] = useState(null);
-  const [isValidatingCedula, setIsValidatingCedula] = useState(false);
   const [empresas, setEmpresas] = useState([]); // Estado para las empresas
   const navigate = useNavigate();
 
@@ -225,14 +222,13 @@ export function Register() {
                 type="password"
                 id="password"
                 className="shadow-sm mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-700 block w-full p-2.5"
-                placeholder="Contraseña"
                 value={formData.password}
                 onChange={handleChange}
                 required
               />
             </div>
 
-            <div className="mb-2">
+            <div className="mb-5">
               <label htmlFor="password_confirmation" className="block mb-2 text-sm font-medium text-gray-900">
                 Confirmar Contraseña
               </label>
@@ -240,23 +236,21 @@ export function Register() {
                 type="password"
                 id="password_confirmation"
                 className="shadow-sm mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-700 block w-full p-2.5"
-                placeholder="Confirmar contraseña"
                 value={formData.password_confirmation}
                 onChange={handleChange}
                 required
               />
             </div>
 
-            <div className="mb-2">
+            <div className="mb-5">
               <label htmlFor="image" className="block mb-2 text-sm font-medium text-gray-900">
-                Imagen de perfil
+                Foto de perfil
               </label>
               <input
                 type="file"
                 id="image"
-                accept="image/*"
+                className="shadow-sm mb-5 text-sm file:bg-blue-50 file:text-sky-900 file:border-sky-900 file:px-2 file:py-1"
                 onChange={handleChange}
-                className="mb-5"
               />
             </div>
 
