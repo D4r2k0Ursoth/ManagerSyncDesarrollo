@@ -34,6 +34,7 @@ export function Register() {
         }
         const data = await response.json();
         setEmpresas(data); // Asumimos que la respuesta es un array de empresas
+        console.log('Empresas cargadas:', data); // Log de las empresas cargadas
       } catch (error) {
         console.error('Error al obtener empresas:', error);
       }
@@ -44,6 +45,7 @@ export function Register() {
 
   const handleChange = (event) => {
     const { id, value, type, files } = event.target;
+    console.log(`Cambio en el campo: ${id}, Valor: ${value}`); // Log para ver los cambios
     setFormData({
       ...formData,
       [id]: type === 'file' ? files[0] : value
@@ -62,33 +64,33 @@ export function Register() {
       method: 'POST',
       body: formData,
     });
-  
+
+    console.log('Respondiendo de Cloudinary:', response); // Log de la respuesta de Cloudinary
     const data = await response.json();
     const fileName = data.public_id.split('/').pop(); // Extraemos solo el nombre del archivo
     return fileName; // Retornamos el nombre del archivo
   };
-  
-
-
-  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+
+    console.log('Datos del formulario antes de validación:', formData); // Log para ver los datos del formulario
+
     if (formData.password !== formData.password_confirmation) {
       setErrors({ password_confirmation: 'Las contraseñas no coinciden' });
       return;
     }
-  
+
     const formDataToSend = new FormData();
-  
+
     try {
       // Subir la imagen a Cloudinary si hay una
       let imageName = '';
       if (formData.image) {
         imageName = await uploadToCloudinary(formData.image); // Obtén solo el nombre del archivo
+        console.log('Nombre de la imagen subida:', imageName); // Log para el nombre de la imagen subida
       }
-  
+
       // Añadir los datos del formulario
       for (const key in formData) {
         if (key === 'image') {
@@ -96,41 +98,25 @@ export function Register() {
         }
         formDataToSend.append(key, formData[key]);
       }
-  
+
       // Añadimos el nombre de la imagen
       if (imageName) {
         formDataToSend.append('profile_image', imageName);
       }
-  
+
+      console.log('Datos que se van a enviar:', formDataToSend); // Log de los datos que se enviarán
+
       // Hacer el POST a la ruta de registro
       const response = await fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/register', {
         method: 'POST',
         body: formDataToSend
       });
-  
-      if (!response.ok) {
-        const data = await response.json();
-        setErrors(data.errors || {});
-        return;
-      }
-  
-      setSuccess('Usuario registrado correctamente.');
-      setTimeout(() => {
-        navigate('/LogIn');
-      }, 2000);
-    } catch (error) {
-      console.error('Error:', error.message);
-    }
-  
 
-    try {
-      const response = await fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/register', {
-        method: 'POST',
-        body: formDataToSend
-      });
+      console.log('Respuesta de la API:', response); // Log de la respuesta de la API
 
       if (!response.ok) {
         const data = await response.json();
+        console.log('Errores al registrar:', data.errors); // Log de los errores de la API
         setErrors(data.errors || {});
         return;
       }
@@ -140,7 +126,7 @@ export function Register() {
         navigate('/LogIn');
       }, 2000);
     } catch (error) {
-      console.error('Error:', error.message);
+      console.error('Error en el submit:', error.message);
     }
   };
 
@@ -226,9 +212,7 @@ export function Register() {
               >
                 <option value="">Seleccione una empresa</option>
                 {empresas.map((empresa) => (
-                  <option key={empresa.id} value={empresa.id}>
-                    {empresa.nombre} {/* Cambia 'nombre' por el campo que quieras mostrar */}
-                  </option>
+                  <option key={empresa.id} value={empresa.id}>{empresa.nombre}</option>
                 ))}
               </select>
             </div>
@@ -250,13 +234,13 @@ export function Register() {
 
             <div className="mb-2">
               <label htmlFor="password_confirmation" className="block mb-2 text-sm font-medium text-gray-900">
-                Confirmar contraseña
+                Confirmar Contraseña
               </label>
               <input
                 type="password"
                 id="password_confirmation"
                 className="shadow-sm mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-700 block w-full p-2.5"
-                placeholder="Confirme contraseña"
+                placeholder="Confirmar contraseña"
                 value={formData.password_confirmation}
                 onChange={handleChange}
                 required
@@ -270,16 +254,17 @@ export function Register() {
               <input
                 type="file"
                 id="image"
-                className="block mb-5 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-sky-700"
+                accept="image/*"
                 onChange={handleChange}
+                className="mb-5"
               />
             </div>
 
             <button
               type="submit"
-              className="mt-4 w-full text-sm px-5 mb-4 py-2.5 text-center font-medium text-white bg-sky-900 rounded-xl hover:bg-indigo-900 focus:ring-4 focus:outline-none focus:ring-blue-200"
+              className="w-full text-sm px-5 py-2.5 text-center font-medium text-white bg-sky-900 rounded-xl hover:bg-indigo-900 focus:ring-4 focus:outline-none focus:ring-blue-200"
             >
-              Registrar Usuario
+              Registrar
             </button>
           </form>
         </div>
