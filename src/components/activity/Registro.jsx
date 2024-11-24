@@ -5,14 +5,11 @@ import { Header } from '../Header.jsx';
 import { Footer } from '../Footer.jsx';
 import { MantenimientoEmpresas } from './MantenimientoEmpresas.jsx';
 
-
-
 export function Register() {
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',
     cedula: '',
-    
     role: 'admin',
     password: '',
     password_confirmation: '',
@@ -25,12 +22,7 @@ export function Register() {
   const [cedulaEmpresaStatus, setCedulaEmpresaStatus] = useState(null);
   const [isValidatingCedula, setIsValidatingCedula] = useState(false);
   const [empresas, setEmpresas] = useState([]); // Estado para las empresas
-    
-const navigate = useNavigate();
-
-  
-
-
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Función para obtener las empresas
@@ -50,8 +42,6 @@ const navigate = useNavigate();
     fetchEmpresas(); // Llamamos a la función al montar el componente
   }, []);
 
-
-  
   const handleChange = (event) => {
     const { id, value, type, files } = event.target;
     setFormData({
@@ -60,7 +50,22 @@ const navigate = useNavigate();
     });
   };
 
-  
+  const uploadToCloudinary = async (file) => {
+    const cloudName = 'tu-cloud-name'; // Reemplazar con tu nombre de Cloudinary
+    const uploadPreset = 'tu-upload-preset'; // Reemplazar con tu preset de subida
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', uploadPreset);
+
+    const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+      method: 'POST',
+      body: formData,
+    });
+
+    const data = await response.json();
+    return data.secure_url; // Retorna la URL segura de la imagen
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -72,7 +77,13 @@ const navigate = useNavigate();
 
     const formDataToSend = new FormData();
     for (const key in formData) {
-      formDataToSend.append(key === 'image' ? 'profile_image' : key, formData[key]);
+      if (key === 'image' && formData[key]) {
+        // Si hay imagen, súbela primero a Cloudinary
+        const imageUrl = await uploadToCloudinary(formData[key]);
+        formDataToSend.append('profile_image', imageUrl);
+      } else {
+        formDataToSend.append(key, formData[key]);
+      }
     }
 
     try {
@@ -96,39 +107,32 @@ const navigate = useNavigate();
     }
   };
 
-
-
   return (
     <>
-    <Header />
-    <div className="bg-slate-300 w-screen max-h-full pb-20">
-      <div className="mx-auto max-w-2xl">
-        <h1 className="font-bold lg:text-5xl text-4xl text-center py-20">¡Bienvenido(a)!</h1>
+      <Header />
+      <div className="bg-slate-300 w-screen max-h-full pb-20">
+        <div className="mx-auto max-w-2xl">
+          <h1 className="font-bold lg:text-5xl text-4xl text-center py-20">¡Bienvenido(a)!</h1>
 
           <form className="rounded-xl max-w-56 mx-auto mb-5 bg-white p-3" onSubmit={handleSubmit}>
             {success && <p className="text-cyan-600 mt-2">{success}</p>}
-
             {errors.email && <p className="text-pink-700">{errors.email[0]}</p>}
             {errors.cedula && <p className="text-pink-700">{errors.cedula[0]}</p>}
             {errors.password_confirmation && <p className="text-pink-700">{errors.password_confirmation}</p>}
 
-
-
-            <label
-                htmlFor="empresa"
-                className="block mt-4 text-sm font-medium text-pink-700">
-                Debe registrar una empresa antes de registrar un usuario
-              </label>
+            <label htmlFor="empresa" className="block mt-4 text-sm font-medium text-pink-700">
+              Debe registrar una empresa antes de registrar un usuario
+            </label>
             <button
               type="button"
               onClick={() => navigate("/MantenimientoEmpresas")}
-              className="mt-4 w-full text-sm px-5 mb-4 py-2.5 text-center font-medium text-white bg-sky-900 rounded-xl hover:bg-indigo-900 focus:ring-4 focus:outline-none focus:ring-blue-200">
-              Ir a modulo de Empresas
+              className="mt-4 w-full text-sm px-5 mb-4 py-2.5 text-center font-medium text-white bg-sky-900 rounded-xl hover:bg-indigo-900 focus:ring-4 focus:outline-none focus:ring-blue-200"
+            >
+              Ir a módulo de Empresas
             </button>
-            
+
             <div className="mb-2">
-              <label htmlFor="nombre" 
-              className="block mb-2 ml-0.5 text-sm font-medium text-gray-900">
+              <label htmlFor="nombre" className="block mb-2 ml-0.5 text-sm font-medium text-gray-900">
                 Nombre de usuario
               </label>
               <input
@@ -171,8 +175,9 @@ const navigate = useNavigate();
                 required
               />
             </div>
+
             <div className="mb-2">
-              <label htmlFor="empresa_id" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              <label htmlFor="empresa_id" className="block mb-2 text-sm font-medium text-gray-900">
                 Seleccionar Empresa
               </label>
               <select
@@ -180,15 +185,17 @@ const navigate = useNavigate();
                 className="shadow-sm mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-700 block w-full p-2.5"
                 value={formData.empresa_id}
                 onChange={handleChange}
-                required>
+                required
+              >
                 <option value="">Seleccione una empresa</option>
-                {empresas.map(empresa => (
+                {empresas.map((empresa) => (
                   <option key={empresa.id} value={empresa.id}>
                     {empresa.nombre} {/* Cambia 'nombre' por el campo que quieras mostrar */}
                   </option>
                 ))}
               </select>
             </div>
+
             <div className="mb-2">
               <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">
                 Contraseña
@@ -212,7 +219,7 @@ const navigate = useNavigate();
                 type="password"
                 id="password_confirmation"
                 className="shadow-sm mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-700 block w-full p-2.5"
-                placeholder="Confirmar contraseña"
+                placeholder="Confirme contraseña"
                 value={formData.password_confirmation}
                 onChange={handleChange}
                 required
@@ -225,22 +232,17 @@ const navigate = useNavigate();
               </label>
               <input
                 type="file"
-                id="profile_image"
-                className="shadow-sm mb-5  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5
-                  file:py-2 file:px-4 file:-ml-2
-                  file:rounded-full file:border-0
-                  file:text-sm file:font-semibold
-                  file:bg-sky-50 file:text-sky-800
-                  hover:file:bg-sky-100"
-                accept="image/*"
+                id="image"
+                className="block mb-5 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-sky-700"
                 onChange={handleChange}
               />
             </div>
 
             <button
               type="submit"
-              className="mt-2 w-full text-sm px-5 py-2.5 text-center font-medium text-white bg-sky-900 rounded-xl hover:bg-indigo-900 focus:ring-4 focus:outline-none focus:ring-blue-200">
-              Registrarse
+              className="mt-4 w-full text-sm px-5 mb-4 py-2.5 text-center font-medium text-white bg-sky-900 rounded-xl hover:bg-indigo-900 focus:ring-4 focus:outline-none focus:ring-blue-200"
+            >
+              Registrar Usuario
             </button>
           </form>
         </div>
