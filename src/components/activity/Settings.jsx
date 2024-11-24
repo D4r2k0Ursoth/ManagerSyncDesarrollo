@@ -51,7 +51,7 @@ export function Settings() {
             <div className="relative w-32 h-32 lg:ml-14 overflow-hidden bg-gray-100 rounded-full drop-shadow">
   {user?.profile_image ? (
     <img
-      src={`https://res.cloudinary.com/dw91gh7jr/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/${user.profile_image}`}
+      src={`https://res.cloudinary.com/dw91gh7jr/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/euowlldglzwsd3f17bs6.png`}
       alt="Profile"
       className="w-full h-full object-cover p-10"
     />
