@@ -48,28 +48,28 @@ export function Settings() {
             <h2 className="font-semibold lg:indent-6 lg:text-2xl text-3xl lg:text-left text-center lg:ml-2 lg:p-2 lg:-mt-9 p-1">Rol: {user.role}</h2>
 
             <div className="lg:grid lg:grid-cols-2 lg:p-10 lg:mt-0 mt-4 mx-12">
-              <div className="relative w-32 h-32 lg:ml-14  overflow-hidden bg-gray-100 rounded-full drop-shadow">
-                {user?.profile_image ? (
-                  <img
-                    src={user.profile_image}
-                    alt="Profile"
-                    className="w-full h-full object-cover p-10"
-                  />
-                ) : (
-                  <svg
-                    className="absolute w-36 h-36 text-gray-400 -left-1"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                      clipRule="evenodd"
-                    ></path>
-                  </svg>
-                )}
-              </div>
+            <div className="relative w-32 h-32 lg:ml-14 overflow-hidden bg-gray-100 rounded-full drop-shadow">
+  {user?.profile_image ? (
+    <img
+      src={`https://res.cloudinary.com/dw91gh7jr/image/upload/w_1000,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/${user.profile_image}`}
+      alt="Profile"
+      className="w-full h-full object-cover p-10"
+    />
+  ) : (
+    <svg
+      className="absolute w-36 h-36 text-gray-400 -left-1"
+      fill="currentColor"
+      viewBox="0 0 20 20"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+        clipRule="evenodd"
+      ></path>
+    </svg>
+  )}
+</div>
 
               <div className="grid grid-cols-2 lg:gap-2 gap-6 py-4 lg:py-2">
                 <div className="flex lg:flex-col lg:justify-end ">
