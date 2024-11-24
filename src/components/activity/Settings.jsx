@@ -35,7 +35,7 @@ export function Settings() {
 
   // Construcción de la URL completa de la imagen de perfil
   const profileImageUrl = user?.profile_image
-  ? `${user.profile_image}`  // Solo el nombre del archivo, sin la ruta completa
+  ? `${cloudinaryBaseUrl}${user.profile_image}`  // Usando Cloudinary en lugar de DigitalOcean
   : null;
 
   return (
