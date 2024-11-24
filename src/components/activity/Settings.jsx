@@ -189,29 +189,29 @@ export function Settings() {
       </div>
 
       {showConfirmDelete && (
-        <div className="modal">
-          <div className="modal-content">
-            <h3>¿Estás seguro de eliminar tu cuenta?</h3>
-            <div className="flex gap-2 justify-center">
-              <button
-                onClick={() => {
-                  deleteAccount();
-                  setShowConfirmDelete(false);
-                }}
-                className="p-2 rounded-full text-white bg-red-600"
-              >
-                Eliminar cuenta
-              </button>
-              <button
-                onClick={() => setShowConfirmDelete(false)}
-                className="p-2 rounded-full text-white bg-gray-600"
-              >
-                Cancelar
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+  <div className="modal">
+    <div className="modal-content">
+      <h3>¿Estás seguro de eliminar tu cuenta?</h3>
+      <div className="flex gap-2 justify-center">
+        <button
+          onClick={() => {
+            deleteAccount(token); // Pasar el token aquí
+            setShowConfirmDelete(false);
+          }}
+          className="p-2 rounded-full text-white bg-red-600"
+        >
+          Eliminar cuenta
+        </button>
+        <button
+          onClick={() => setShowConfirmDelete(false)}
+          className="p-2 rounded-full text-white bg-gray-600"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+)}
       
       <Footer />
     </>
