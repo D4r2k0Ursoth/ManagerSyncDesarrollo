@@ -70,16 +70,16 @@ export function Register() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     console.log('Datos del formulario antes de validación:', formData); // Log para ver los datos del formulario
-
+  
     if (formData.password !== formData.password_confirmation) {
       setErrors({ password_confirmation: 'Las contraseñas no coinciden' });
       return;
     }
-
+  
     const formDataToSend = new FormData();
-
+  
     try {
       // Subir la imagen a Cloudinary si hay una
       let imageName = '';
@@ -87,7 +87,7 @@ export function Register() {
         imageName = await uploadToCloudinary(formData.image); // Obtén solo el nombre del archivo
         console.log('Nombre de la imagen subida:', imageName); // Log para el nombre de la imagen subida
       }
-
+  
       // Añadir los datos del formulario
       for (const key in formData) {
         if (key === 'image') {
@@ -95,29 +95,29 @@ export function Register() {
         }
         formDataToSend.append(key, formData[key]);
       }
-
+  
       // Añadimos el nombre de la imagen
       if (imageName) {
-        formDataToSend.append('profile_image', imageName);
+        formDataToSend.append('profile_image', imageName); // Asegúrate de que el backend esté esperando este campo
       }
-
+  
       console.log('Datos que se van a enviar:', formDataToSend); // Log de los datos que se enviarán
-
+  
       // Hacer el POST a la ruta de registro
       const response = await fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/register', {
         method: 'POST',
         body: formDataToSend
       });
-
+  
       console.log('Respuesta de la API:', response); // Log de la respuesta de la API
-
+  
       if (!response.ok) {
         const data = await response.json();
         console.log('Errores al registrar:', data.errors); // Log de los errores de la API
         setErrors(data.errors || {});
         return;
       }
-
+  
       setSuccess('Usuario registrado correctamente.');
       setTimeout(() => {
         navigate('/LogIn');
