@@ -35,14 +35,14 @@ export function Settings() {
 
   // Construcción de la URL completa de la imagen de perfil
   const profileImageUrl = user?.profile_image
-  ? `${cloudinaryBaseUrl}${user.profile_image}`  // Usando Cloudinary en lugar de DigitalOcean
-  : null;
+    ? `${cloudinaryBaseUrl}${user.profile_image.split('/').pop().split('.')[0]}.png`  // Usamos el identificador único de la imagen
+    : null;
 
   return (
     <>
       <Header />
       
-      <div className="bg-slate-300 w-screen flex h-max  gap-0">
+      <div className="bg-slate-300 w-screen flex h-max gap-0">
         <div className='basis-1/4 mr-4 h-min items-stretch'>  
           <Sidebar logout={logout} />
         </div>
@@ -52,7 +52,7 @@ export function Settings() {
           <h2 className="font-semibold lg:indent-6 lg:text-2xl text-3xl lg:text-left text-center lg:ml-2 lg:p-2 lg:-mt-9 p-1">Rol: {user.role}</h2>
 
           <div className="lg:grid lg:grid-cols-2 lg:p-10 lg:mt-0 mt-4 mx-12">
-            <div className="relative w-32 h-32 lg:ml-14  overflow-hidden bg-gray-100 rounded-full drop-shadow">
+            <div className="relative w-32 h-32 lg:ml-14 overflow-hidden bg-gray-100 rounded-full drop-shadow">
               {profileImageUrl ? (
                 <img
                   src={profileImageUrl}
@@ -180,12 +180,8 @@ export function Settings() {
               </div>
               {error && <p className="text-pink-700">{error}</p>}
               {success && <p className="text-cyan-600">{success}</p>}
-              <div className="flex lg:justify-end justify-center mt-4">
-                <button
-                  type="submit"
-                  className="px-6 py-2 text-white bg-sky-600 hover:bg-sky-700 rounded-lg">
-                  Guardar cambios
-                </button>
+              <div className="flex gap-2 justify-center mt-5">
+                <button type="submit" className="p-2 rounded-full text-white bg-blue-600">Guardar cambios</button>
               </div>
             </form>
           )}
@@ -193,27 +189,30 @@ export function Settings() {
       </div>
 
       {showConfirmDelete && (
-        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg">
-            <h3 className="font-semibold text-xl">¿Estás seguro de eliminar tu cuenta?</h3>
-            <div className="mt-4">
+        <div className="modal">
+          <div className="modal-content">
+            <h3>¿Estás seguro de eliminar tu cuenta?</h3>
+            <div className="flex gap-2 justify-center">
               <button
-                onClick={deleteAccount}
-                className="text-red-600 hover:text-red-800 mr-4"
+                onClick={() => {
+                  deleteAccount();
+                  setShowConfirmDelete(false);
+                }}
+                className="p-2 rounded-full text-white bg-red-600"
               >
-                Sí, eliminar
+                Eliminar cuenta
               </button>
               <button
                 onClick={() => setShowConfirmDelete(false)}
-                className="text-gray-600 hover:text-gray-800"
+                className="p-2 rounded-full text-white bg-gray-600"
               >
-                No, cancelar
+                Cancelar
               </button>
             </div>
           </div>
         </div>
       )}
-
+      
       <Footer />
     </>
   );
