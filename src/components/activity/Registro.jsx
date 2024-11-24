@@ -53,38 +53,75 @@ export function Register() {
   const uploadToCloudinary = async (file) => {
     const cloudName = 'dw91gh7jr'; // Reemplazar con tu nombre de Cloudinary
     const uploadPreset = 'imgsmanagersync'; // Reemplazar con tu preset de subida
-
+  
     const formData = new FormData();
     formData.append('file', file);
     formData.append('upload_preset', uploadPreset);
-
+  
     const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
       method: 'POST',
       body: formData,
     });
-
+  
     const data = await response.json();
-    return data.secure_url; // Retorna la URL segura de la imagen
+    const fileName = data.public_id.split('/').pop(); // Extraemos solo el nombre del archivo
+    return fileName; // Retornamos el nombre del archivo
   };
+  
+
+
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     if (formData.password !== formData.password_confirmation) {
       setErrors({ password_confirmation: 'Las contraseñas no coinciden' });
       return;
     }
-
+  
     const formDataToSend = new FormData();
-    for (const key in formData) {
-      if (key === 'image' && formData[key]) {
-        // Si hay imagen, súbela primero a Cloudinary
-        const imageUrl = await uploadToCloudinary(formData[key]);
-        formDataToSend.append('profile_image', imageUrl);
-      } else {
+  
+    try {
+      // Subir la imagen a Cloudinary si hay una
+      let imageName = '';
+      if (formData.image) {
+        imageName = await uploadToCloudinary(formData.image); // Obtén solo el nombre del archivo
+      }
+  
+      // Añadir los datos del formulario
+      for (const key in formData) {
+        if (key === 'image') {
+          continue; // Evitamos enviar la imagen directamente
+        }
         formDataToSend.append(key, formData[key]);
       }
+  
+      // Añadimos el nombre de la imagen
+      if (imageName) {
+        formDataToSend.append('profile_image', imageName);
+      }
+  
+      // Hacer el POST a la ruta de registro
+      const response = await fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/register', {
+        method: 'POST',
+        body: formDataToSend
+      });
+  
+      if (!response.ok) {
+        const data = await response.json();
+        setErrors(data.errors || {});
+        return;
+      }
+  
+      setSuccess('Usuario registrado correctamente.');
+      setTimeout(() => {
+        navigate('/LogIn');
+      }, 2000);
+    } catch (error) {
+      console.error('Error:', error.message);
     }
+  
 
     try {
       const response = await fetch('https://manaercynbdf-miccs.ondigitalocean.app/api/register', {
