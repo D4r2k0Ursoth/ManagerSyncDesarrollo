@@ -16,7 +16,7 @@ export function Settings() {
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
   // URL base de Cloudinary
-  const cloudinaryBaseUrl = "https://res.cloudinary.com/tu_nombre_de_cuenta/image/upload/";
+  const cloudinaryBaseUrl = "https://res.cloudinary.com/dw91gh7jr/image/upload/";
 
   // Hooks personalizados
   const { formData, handleChange } = useProfileForm(user);
