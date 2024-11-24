@@ -51,8 +51,8 @@ export function Register() {
   };
 
   const uploadToCloudinary = async (file) => {
-    const cloudName = 'tu-cloud-name'; // Reemplazar con tu nombre de Cloudinary
-    const uploadPreset = 'tu-upload-preset'; // Reemplazar con tu preset de subida
+    const cloudName = 'dw91gh7jr'; // Reemplazar con tu nombre de Cloudinary
+    const uploadPreset = 'imgsmanagersync'; // Reemplazar con tu preset de subida
 
     const formData = new FormData();
     formData.append('file', file);
