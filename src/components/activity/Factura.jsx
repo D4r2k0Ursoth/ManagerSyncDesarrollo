@@ -94,7 +94,7 @@ export function Factura({ subtotal, totalIVA, totalVenta, carrito, selectedClien
         <Text style={{ marginBottom: 5 }}>Dirección: {empresa.otras_senas}</Text>
         <Text style={{ marginBottom: 5 }}>Teléfono: {empresa.telefono}</Text>
         <Text style={{ marginBottom: 5 }}>Cédula: {empresa.cedula_empresa}</Text>
-        <Text style={{ marginBottom: 5 }}>Usuario: José Fabio Ramirez</Text>
+        <Text style={{ marginBottom: 5 }}>Usuario: {user.nombre}</Text>
         <Text style={{ marginBottom: 5 }}>-------------------------------------------</Text>
         <Text style={{ marginBottom: 5 }}>Factura Electrónica #{facturaId}</Text>
         <Text style={{ marginBottom: 5 }}>Código Único: {codigoUnico}</Text>
